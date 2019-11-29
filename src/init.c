@@ -68,7 +68,7 @@ void init_shell(Shell *shell)
     init_builtins(shell);
     get_prompt(shell);
     init(shell);
-    // parse_config(".42sh_config.json");
+    parse_config(".42sh_config.json");
 }
 
 void init(Shell *shell)
