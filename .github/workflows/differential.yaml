@@ -35,14 +35,13 @@ jobs:
       run: |
         export LD_LIBRARY_PATH="$(realpath infer-linux64-v${VERSION}/lib/infer/infer/libso)"
         cd build
-        git diff --name-only "${GITHUB_SHA}..master" > index.txt
         ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json capture
-        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json analyze --changed-files-index index.txt
+        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json analyze
         cp infer-out/report.json report-feature.json
         git checkout master
         cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
-        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json capture --reactive
-        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json analyze --reactive --changed-files-index index.txt
+        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json capture
+        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json analyze
         ../infer-linux64-v${VERSION}/bin/infer reportdiff --report-current report-feature.json --report-previous infer-out/report.json
     - uses: actions/upload-artifact@v1
       with:
@@ -57,22 +56,21 @@ jobs:
       - name: Download results from static analysis
         uses: actions/download-artifact@v1
         with:
-          name: results
+          name: infer-differential-reports
       - name: Generate PR comment
-        id: generate
         run: |
-          jq '{ "MEMORY_LEAK": map(select(.bug_type == "MEMORY_LEAK")) | length, "RESOURCE_LEAK": map(select(.bug_type == "RESOURCE_LEAK")) | length, "NULL_DEREFERENCE": map(select(.bug_type == "NULL_DEREFERENCE")) | length, "DEAD_STORE": map(select(.bug_type == "DEAD_STORE")) | length, "USE_AFTER_FREE": map(select(.bug_type == "USE_AFTER_FREE")) | length, "UNINITIALIZED_VALUE": map(select(.bug_type == "UNINITIALIZED_VALUE")) | length } | to_entries | sort_by(.value) | reverse | from_entries' results/introduced.json > introduced.json
-          jq '{ "MEMORY_LEAK": map(select(.bug_type == "MEMORY_LEAK")) | length, "RESOURCE_LEAK": map(select(.bug_type == "RESOURCE_LEAK")) | length, "NULL_DEREFERENCE": map(select(.bug_type == "NULL_DEREFERENCE")) | length, "DEAD_STORE": map(select(.bug_type == "DEAD_STORE")) | length, "USE_AFTER_FREE": map(select(.bug_type == "USE_AFTER_FREE")) | length, "UNINITIALIZED_VALUE": map(select(.bug_type == "UNINITIALIZED_VALUE")) | length } | to_entries | sort_by(.value) | reverse | from_entries' results/fixed.json > fixed.json
+          jq '{ "MEMORY_LEAK": map(select(.bug_type == "MEMORY_LEAK")) | length, "RESOURCE_LEAK": map(select(.bug_type == "RESOURCE_LEAK")) | length, "NULL_DEREFERENCE": map(select(.bug_type == "NULL_DEREFERENCE")) | length, "DEAD_STORE": map(select(.bug_type == "DEAD_STORE")) | length, "USE_AFTER_FREE": map(select(.bug_type == "USE_AFTER_FREE")) | length, "UNINITIALIZED_VALUE": map(select(.bug_type == "UNINITIALIZED_VALUE")) | length } | to_entries | sort_by(.value) | reverse | from_entries' infer-differential-reports/introduced.json > introduced.json
+          jq '{ "MEMORY_LEAK": map(select(.bug_type == "MEMORY_LEAK")) | length, "RESOURCE_LEAK": map(select(.bug_type == "RESOURCE_LEAK")) | length, "NULL_DEREFERENCE": map(select(.bug_type == "NULL_DEREFERENCE")) | length, "DEAD_STORE": map(select(.bug_type == "DEAD_STORE")) | length, "USE_AFTER_FREE": map(select(.bug_type == "USE_AFTER_FREE")) | length, "UNINITIALIZED_VALUE": map(select(.bug_type == "UNINITIALIZED_VALUE")) | length } | to_entries | sort_by(.value) | reverse | from_entries' infer-differential-reports/fixed.json > fixed.json
           node << EOF
-          const core = require('@actions/core');
-          const fs = require("fs");
+          const https = require('https');
+          const fs = require('fs');
           const names = {
-              "MEMORY_LEAK": "Memory leak",
-              "UNINITIALIZED_VALUE": "Uninitialized value",
-              "DEAD_STORE": "Useless memory write",
-              "NULL_DEREFERENCE": "Null pointer dereference",
-              "RESOURCE_LEAK": "Resource leak",
-              "USE_AFTER_FREE": "Use-after-free"
+              'MEMORY_LEAK': 'Memory leak',
+              'UNINITIALIZED_VALUE': 'Uninitialized value',
+              'DEAD_STORE': 'Useless memory write',
+              'NULL_DEREFERENCE': 'Null pointer dereference',
+              'RESOURCE_LEAK': 'Resource leak',
+              'USE_AFTER_FREE': 'Use-after-free'
           };
           function resolveName(name) {
               if (name in names) {
@@ -85,29 +83,35 @@ jobs:
               const contents = fs.readFileSync(file).toString();
               const data = JSON.parse(contents);
               return Object.entries(data)
-                  .map(([k, v]) => `- ${resolveName(k)}: ${v}`)
-                  .join('\n');
+                .map(([k, v]) => '- ' + resolveName(k) + ': ' + v)
+                .join('\n');
           }
-          const introduced = processFile("introduced.json");
-          const fixed = processFile("fixed.json");
+          const introduced = processFile('introduced.json');
+          const fixed = processFile('fixed.json');
 
           const lines = [
-              "Hello,"
-              "",
-              "Here are the results of the differential static analysis between this branch and the master branch.",
-              "",
-              "Number of introduced bugs:",
+              'Hello,',
+              '',
+              'Here is a quick summary of the differential static analysis between this branch and the master branch.',
+              '',
+              'Number of bugs introduced in this PR:',
               introduced,
-              "Number of fixed bugs:",
+              '',
+              'Number of bugs fixed by this PR:',
               fixed,
-              "",
-              "You can get details about these bugs in the complete report artifact of the related GitHub Actions run."
+              '',
+              'You can get details about these bugs in the complete build artifact of the related CI run below.'
           ];
-          core.setOutput('message', lines.join('\n'));
+          fs.writeFileSync("message.txt", lines.join('\n'));
           EOF
-      - name: Publish PR comment
-        uses: unsplash/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          msg: ${{ steps.generate.outputs.message }}
+          export PR_NUMBER="$(jq --raw-output .pull_request.number "${GITHUB_EVENT_PATH}")"
+          export API_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments"
+          export REQ_BODY="{\"body\": \"$(cat message.txt | sed ':a;N;$!ba;s/\n/\\n/g')\"}"
+          echo "PR number: ${PR_NUMBER}"
+          echo "URL: ${API_URL}"
+          echo "Body: ${REQ_BODY}"
+          curl -XPOST "${API_URL}" \
+            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -H 'accept: application/vnd.github.v3+json' \
+            -H 'content-type: application/json' \
+            --data "${REQ_BODY}"
