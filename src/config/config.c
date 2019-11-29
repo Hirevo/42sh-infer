@@ -40,21 +40,33 @@ OPTION(Config) parse_config(char *filename)
     json_item_t *history_item = lhmap_get(root->data, "history_file");
 
     OPTION(CharPtr)
-    rc_file = (rc_item->type == JSON_STRING) ?
+    rc_file = (rc_item && rc_item->type == JSON_STRING) ?
         OPT_FROM_NULLABLE(CharPtr, strdup(rc_item->data)) :
         NONE(CharPtr);
     OPTION(CharPtr)
-    alias_file = (alias_item->type == JSON_STRING) ?
+    alias_file = (alias_item && alias_item->type == JSON_STRING) ?
         OPT_FROM_NULLABLE(CharPtr, strdup(alias_item->data)) :
         NONE(CharPtr);
     OPTION(CharPtr)
-    history_file = (history_item->type == JSON_STRING) ?
+    history_file = (history_item && history_item->type == JSON_STRING) ?
         OPT_FROM_NULLABLE(CharPtr, strdup(history_item->data)) :
         NONE(CharPtr);
 
-    putstr("rc_file: '%s'\n", rc_item->data);
-    putstr("alias_file: '%s'\n", alias_item->data);
-    putstr("history_file: '%s'\n", history_item->data);
+    if (IS_SOME(rc_file)) {
+        putstr("rc_file: Some(\"%s\")\n", OPT_UNWRAP(rc_file));
+    } else {
+        putstr("rc_file: None\n");
+    }
+    if (IS_SOME(alias_file)) {
+        putstr("alias_file: Some(\"%s\")\n", OPT_UNWRAP(alias_file));
+    } else {
+        putstr("alias_file: None\n");
+    }
+    if (IS_SOME(history_file)) {
+        putstr("history_file: Some(\"%s\")\n", OPT_UNWRAP(history_file));
+    } else {
+        putstr("history_file: None\n");
+    }
 
     return NONE(Config);
 }
