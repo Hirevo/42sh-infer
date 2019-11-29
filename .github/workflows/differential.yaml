@@ -1,0 +1,113 @@
+name: Differential
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  infer:
+    name: Differential static analysis (Infer)
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout master branch
+      uses: actions/checkout@master
+      with:
+        submodules: recursive
+    - name: Install 42sh dependencies
+      run: |
+        sudo apt install -y libncurses5-dev
+    - name: Install Infer
+      env:
+        VERSION: "0.17.0"
+      run: |
+        wget "https://github.com/facebook/infer/releases/download/v${VERSION}/infer-linux64-v${VERSION}.tar.xz"
+        tar xJf "infer-linux64-v${VERSION}.tar.xz"
+        rm -rf "infer-linux64-v${VERSION}.tar.xz"
+    - name: Generate compilation database
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+    - name: Run Infer (differential)
+      env:
+        VERSION: "0.17.0"
+      run: |
+        export LD_LIBRARY_PATH="$(realpath infer-linux64-v${VERSION}/lib/infer/infer/libso)"
+        cd build
+        git diff --name-only "${GITHUB_SHA}..master" > index.txt
+        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json capture
+        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json analyze --changed-files-index index.txt
+        cp infer-out/report.json report-feature.json
+        git checkout master
+        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json capture --reactive
+        ../infer-linux64-v${VERSION}/bin/infer --compilation-database compile_commands.json analyze --reactive --changed-files-index index.txt
+        ../infer-linux64-v${VERSION}/bin/infer reportdiff --report-current report-feature.json --report-previous infer-out/report.json
+    - uses: actions/upload-artifact@v1
+      with:
+        name: infer-differential-reports
+        path: build/infer-out/differential
+
+  feedback:
+    name: Publish reports
+    needs: infer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download results from static analysis
+        uses: actions/download-artifact@v1
+        with:
+          name: results
+      - name: Generate PR comment
+        id: generate
+        run: |
+          jq '{ "MEMORY_LEAK": map(select(.bug_type == "MEMORY_LEAK")) | length, "RESOURCE_LEAK": map(select(.bug_type == "RESOURCE_LEAK")) | length, "NULL_DEREFERENCE": map(select(.bug_type == "NULL_DEREFERENCE")) | length, "DEAD_STORE": map(select(.bug_type == "DEAD_STORE")) | length, "USE_AFTER_FREE": map(select(.bug_type == "USE_AFTER_FREE")) | length, "UNINITIALIZED_VALUE": map(select(.bug_type == "UNINITIALIZED_VALUE")) | length } | to_entries | sort_by(.value) | reverse | from_entries' results/introduced.json > introduced.json
+          jq '{ "MEMORY_LEAK": map(select(.bug_type == "MEMORY_LEAK")) | length, "RESOURCE_LEAK": map(select(.bug_type == "RESOURCE_LEAK")) | length, "NULL_DEREFERENCE": map(select(.bug_type == "NULL_DEREFERENCE")) | length, "DEAD_STORE": map(select(.bug_type == "DEAD_STORE")) | length, "USE_AFTER_FREE": map(select(.bug_type == "USE_AFTER_FREE")) | length, "UNINITIALIZED_VALUE": map(select(.bug_type == "UNINITIALIZED_VALUE")) | length } | to_entries | sort_by(.value) | reverse | from_entries' results/fixed.json > fixed.json
+          node << EOF
+          const core = require('@actions/core');
+          const fs = require("fs");
+          const names = {
+              "MEMORY_LEAK": "Memory leak",
+              "UNINITIALIZED_VALUE": "Uninitialized value",
+              "DEAD_STORE": "Useless memory write",
+              "NULL_DEREFERENCE": "Null pointer dereference",
+              "RESOURCE_LEAK": "Resource leak",
+              "USE_AFTER_FREE": "Use-after-free"
+          };
+          function resolveName(name) {
+              if (name in names) {
+                  return names[name];
+              } else {
+                  return name;
+              }
+          }
+          function processFile(file) {
+              const contents = fs.readFileSync(file).toString();
+              const data = JSON.parse(contents);
+              return Object.entries(data)
+                  .map(([k, v]) => `- ${resolveName(k)}: ${v}`)
+                  .join('\n');
+          }
+          const introduced = processFile("introduced.json");
+          const fixed = processFile("fixed.json");
+
+          const lines = [
+              "Hello,"
+              "",
+              "Here are the results of the differential static analysis between this branch and the master branch.",
+              "",
+              "Number of introduced bugs:",
+              introduced,
+              "Number of fixed bugs:",
+              fixed,
+              "",
+              "You can get details about these bugs in the complete report artifact of the related GitHub Actions run."
+          ];
+          core.setOutput('message', lines.join('\n'));
+          EOF
+      - name: Publish PR comment
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: ${{ steps.generate.outputs.message }}
