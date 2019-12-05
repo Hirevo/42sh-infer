@@ -82,9 +82,7 @@ jobs:
           function processFile(file) {
               const contents = fs.readFileSync(file).toString();
               const data = JSON.parse(contents);
-              return Object.entries(data)
-                .map(([k, v]) => '- ' + resolveName(k) + ': ' + v)
-                .join('\n');
+              return Object.entries(data).map(([k, v]) => '- ' + resolveName(k) + ': ' + v).join('\n');
           }
           const introduced = processFile('introduced.json');
           const fixed = processFile('fixed.json');
