@@ -1,0 +1,72 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:81: error: USE_AFTER_FREE
+  pointer `file` last assigned on line 74 was freed by call to `get_file_http()` at line 74, column 17 and is dereferenced or freed at line 81, column 17.
+Showing all 9 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:68:1: start of procedure response()
+66.   }
+67.   
+68. > int response(t_socket client, char *buf, t_config *config)
+69.   {
+70.       char *file;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:74:9: Taking false branch
+72.       char **arg;
+73.   
+74.       if ((file = get_file_http(buf)) == NULL)
+              ^
+75.           return 1;
+76.       r_arg = getenv("CFG_PATH");
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:76:5: 
+74.       if ((file = get_file_http(buf)) == NULL)
+75.           return 1;
+76. >     r_arg = getenv("CFG_PATH");
+77.       if (!strncmp(file + 1, MAGIC, strlen(MAGIC))) {
+78.           if ((r_arg = get_arg(buf)) && (arg = my_split_mulchar(r_arg, "&=")))
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:77:10: Taking true branch
+75.           return 1;
+76.       r_arg = getenv("CFG_PATH");
+77.       if (!strncmp(file + 1, MAGIC, strlen(MAGIC))) {
+               ^
+78.           if ((r_arg = get_arg(buf)) && (arg = my_split_mulchar(r_arg, "&=")))
+79.               if (!strcmp(arg[0], "arg")) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:78:14: Taking true branch
+76.       r_arg = getenv("CFG_PATH");
+77.       if (!strncmp(file + 1, MAGIC, strlen(MAGIC))) {
+78.           if ((r_arg = get_arg(buf)) && (arg = my_split_mulchar(r_arg, "&=")))
+                   ^
+79.               if (!strcmp(arg[0], "arg")) {
+80.                   free(r_arg);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:78:40: Taking true branch
+76.       r_arg = getenv("CFG_PATH");
+77.       if (!strncmp(file + 1, MAGIC, strlen(MAGIC))) {
+78.           if ((r_arg = get_arg(buf)) && (arg = my_split_mulchar(r_arg, "&=")))
+                                             ^
+79.               if (!strcmp(arg[0], "arg")) {
+80.                   free(r_arg);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:79:18: Taking true branch
+77.       if (!strncmp(file + 1, MAGIC, strlen(MAGIC))) {
+78.           if ((r_arg = get_arg(buf)) && (arg = my_split_mulchar(r_arg, "&=")))
+79.               if (!strcmp(arg[0], "arg")) {
+                       ^
+80.                   free(r_arg);
+81.                   free(file);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:80:17: 
+78.           if ((r_arg = get_arg(buf)) && (arg = my_split_mulchar(r_arg, "&=")))
+79.               if (!strcmp(arg[0], "arg")) {
+80. >                 free(r_arg);
+81.                   free(file);
+82.                   return parse_arg(client, arg, config);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:81:17: 
+79.               if (!strcmp(arg[0], "arg")) {
+80.                   free(r_arg);
+81. >                 free(file);
+82.                   return parse_arg(client, arg, config);
+83.               }

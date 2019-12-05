@@ -1,0 +1,50 @@
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:116: error: RESOURCE_LEAK
+  resource acquired by call to `open()` at line 113, column 18 is not released after line 116, column 13.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:103:1: start of procedure treat_arg()
+101.   }
+102.   
+103. > static int treat_arg(Shell *shell, int ac, char **av)
+104.   {
+105.       if (lstr_equals(av[1], "-c")) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:105:9: Taking false branch
+103.   static int treat_arg(Shell *shell, int ac, char **av)
+104.   {
+105.       if (lstr_equals(av[1], "-c")) {
+               ^
+106.           if (ac >= 3) {
+107.               signal(SIGINT, SIG_IGN);
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:112:16: Taking true branch
+110.           }
+111.           return shell->exit_code;
+112.       } else if (av[1][0] != '-') {
+                      ^
+113.           int fd = open(av[1], O_RDONLY);
+114.           if (fd == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:113:9: 
+111.           return shell->exit_code;
+112.       } else if (av[1][0] != '-') {
+113. >         int fd = open(av[1], O_RDONLY);
+114.           if (fd == -1)
+115.               return dprintf(2, "%s: No such file or directory\n", av[1]), 1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:114:13: Taking false branch
+112.       } else if (av[1][0] != '-') {
+113.           int fd = open(av[1], O_RDONLY);
+114.           if (fd == -1)
+                   ^
+115.               return dprintf(2, "%s: No such file or directory\n", av[1]), 1;
+116.           if (dup2(fd, 0) == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:116:13: Skipping dup2(): method has no implementation
+114.           if (fd == -1)
+115.               return dprintf(2, "%s: No such file or directory\n", av[1]), 1;
+116.           if (dup2(fd, 0) == -1)
+                   ^
+117.               return 1;
+118.           shell->tty = 0;

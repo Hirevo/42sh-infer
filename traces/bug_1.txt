@@ -1,0 +1,57 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:20: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 20, column 57 is not reachable after line 20, column 22.
+Showing all 7 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:10:1: start of procedure lhmap_set()
+8.   #include "intern_hmap.h"
+9.   
+10. > bool lhmap_set(hmap_t *this, char *key, void *value)
+11.   {
+12.       ssize_t idx;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:13:5: 
+11.   {
+12.       ssize_t idx;
+13. >     bool ret = true;
+14.   
+15.       if (this == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:15:9: Taking false branch
+13.       bool ret = true;
+14.   
+15.       if (this == 0)
+              ^
+16.           return (0);
+17.       idx = lvec_find_index(this->key_table,
+
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:17:5: 
+15.       if (this == 0)
+16.           return (0);
+17. >     idx = lvec_find_index(this->key_table,
+18.           (bool (*)(void *, void *, size_t))(intern_lhmap_find_key), key);
+19.       if (idx == -1) {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:19:9: Taking true branch
+17.       idx = lvec_find_index(this->key_table,
+18.           (bool (*)(void *, void *, size_t))(intern_lhmap_find_key), key);
+19.       if (idx == -1) {
+              ^
+20.           ret = ret && lvec_push_back(this->key_table, 1, strdup(key));
+21.           ret = ret && lvec_push_back(this->value_table, 1, value);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:20:15: Condition is true
+18.           (bool (*)(void *, void *, size_t))(intern_lhmap_find_key), key);
+19.       if (idx == -1) {
+20.           ret = ret && lvec_push_back(this->key_table, 1, strdup(key));
+                    ^
+21.           ret = ret && lvec_push_back(this->value_table, 1, value);
+22.           this->size += ret;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:20:22: Skipping lvec_push_back(): empty list of specs
+18.           (bool (*)(void *, void *, size_t))(intern_lhmap_find_key), key);
+19.       if (idx == -1) {
+20.           ret = ret && lvec_push_back(this->key_table, 1, strdup(key));
+                           ^
+21.           ret = ret && lvec_push_back(this->value_table, 1, value);
+22.           this->size += ret;

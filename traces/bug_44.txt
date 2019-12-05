@@ -1,0 +1,91 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:53: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_long_to_char()` at line 53, column 26 is not reachable after line 53, column 9.
+Showing all 11 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:35:1: start of procedure print_nbr()
+33.   }
+34.   
+35. > void print_nbr(flags_t *flags, va_list ap, int *count)
+36.   {
+37.       if (flags->format == 'o')
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:37:9: Taking false branch
+35.   void print_nbr(flags_t *flags, va_list ap, int *count)
+36.   {
+37.       if (flags->format == 'o')
+              ^
+38.           display_number(flags, ap, "01234567", count);
+39.       else if (flags->format == 'x' || flags->format == 'X')
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:39:14: Taking false branch
+37.       if (flags->format == 'o')
+38.           display_number(flags, ap, "01234567", count);
+39.       else if (flags->format == 'x' || flags->format == 'X')
+                   ^
+40.           display_number(flags, ap,
+41.               (flags->format == 'x' ? "0123456789abcdef" : "0123456789ABCDEF"),
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:39:38: Taking false branch
+37.       if (flags->format == 'o')
+38.           display_number(flags, ap, "01234567", count);
+39.       else if (flags->format == 'x' || flags->format == 'X')
+                                           ^
+40.           display_number(flags, ap,
+41.               (flags->format == 'x' ? "0123456789abcdef" : "0123456789ABCDEF"),
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:43:14: Taking false branch
+41.               (flags->format == 'x' ? "0123456789abcdef" : "0123456789ABCDEF"),
+42.               count);
+43.       else if (flags->format == 'b')
+                   ^
+44.           display_number(flags, ap, "01", count);
+45.       else if (flags->format == 'u') {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:45:14: Taking false branch
+43.       else if (flags->format == 'b')
+44.           display_number(flags, ap, "01", count);
+45.       else if (flags->format == 'u') {
+                   ^
+46.           flags->precision = -1;
+47.           my_putstr_printf(
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:49:16: Taking false branch
+47.           my_putstr_printf(
+48.               my_unsigned_to_char(va_arg(ap, unsigned int)), count, flags, 1);
+49.       } else if (flags->format == 'p')
+                     ^
+50.           display_pointer(flags, ap, count);
+51.       else if (flags->length == 'l' &&
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:51:14: Taking true branch
+49.       } else if (flags->format == 'p')
+50.           display_pointer(flags, ap, count);
+51.       else if (flags->length == 'l' &&
+                   ^
+52.           (flags->format == 'd' || flags->format == 'i'))
+53.           my_putstr_printf(my_long_to_char(va_arg(ap, long)), count, flags, 1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:52:10: Taking false branch
+50.           display_pointer(flags, ap, count);
+51.       else if (flags->length == 'l' &&
+52.           (flags->format == 'd' || flags->format == 'i'))
+               ^
+53.           my_putstr_printf(my_long_to_char(va_arg(ap, long)), count, flags, 1);
+54.       else if (flags->format == 'd' || flags->format == 'i')
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:52:34: Taking true branch
+50.           display_pointer(flags, ap, count);
+51.       else if (flags->length == 'l' &&
+52.           (flags->format == 'd' || flags->format == 'i'))
+                                       ^
+53.           my_putstr_printf(my_long_to_char(va_arg(ap, long)), count, flags, 1);
+54.       else if (flags->format == 'd' || flags->format == 'i')
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:53:9: Skipping my_putstr_printf(): empty list of specs
+51.       else if (flags->length == 'l' &&
+52.           (flags->format == 'd' || flags->format == 'i'))
+53.           my_putstr_printf(my_long_to_char(va_arg(ap, long)), count, flags, 1);
+              ^
+54.       else if (flags->format == 'd' || flags->format == 'i')
+55.           display_number(flags, ap, "0123456789", count);

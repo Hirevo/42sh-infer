@@ -1,0 +1,12 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/int_toc.c:34: error: DEAD_STORE
+  The value written to &nb (type int) is never used.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/int_toc.c:34:9: Write of unused value
+32.               handle_error("calloc");
+33.           ret[0] = '-';
+34.           nb *= (-1);
+              ^
+35.       } else {
+36.           ret = calloc(size_int(nb) + 1, sizeof(char));

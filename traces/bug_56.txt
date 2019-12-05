@@ -1,0 +1,55 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:64: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 51, column 18 is not reachable after line 64, column 5.
+Showing all 7 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:49:1: start of procedure send_env()
+47.   }
+48.   
+49. > void send_env(t_socket client, t_config *config, char **arg)
+50.   {
+51.       char *send = strdup("[");
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:51:5: 
+49.   void send_env(t_socket client, t_config *config, char **arg)
+50.   {
+51. >     char *send = strdup("[");
+52.       int i = 0;
+53.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:52:5: 
+50.   {
+51.       char *send = strdup("[");
+52. >     int i = 0;
+53.   
+54.       (void)(config);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:54:5: 
+52.       int i = 0;
+53.   
+54. >     (void)(config);
+55.       (void)(arg);
+56.       while (environ[i]) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:55:5: 
+53.   
+54.       (void)(config);
+55. >     (void)(arg);
+56.       while (environ[i]) {
+57.           send = my_fstrcat(send, "\"", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:56:12: Loop condition is false. Leaving loop
+54.       (void)(config);
+55.       (void)(arg);
+56.       while (environ[i]) {
+                 ^
+57.           send = my_fstrcat(send, "\"", 1);
+58.           send = my_fstrcat(send, environ[i], 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:64:5: Skipping my_fstrcat(): empty list of specs
+62.           i += 1;
+63.       }
+64.       send = my_fstrcat(send, "]", 1);
+          ^
+65.       send = encode_bs(send);
+66.       write_client(client, HEAD_RESP);

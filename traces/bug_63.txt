@@ -1,0 +1,77 @@
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:68: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_with_capacity()` at line 64, column 23 is not reachable after line 68, column 13.
+Showing all 10 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:57:1: start of procedure exec_pipeline()
+55.   }
+56.   
+57. > OPTION(Int) exec_pipeline(Shell *shell, Command *commands)
+58.   {
+59.       int fds[2];
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:60:5: 
+58.   {
+59.       int fds[2];
+60. >     Command *head = commands;
+61.       OPTION(Int) status = NONE(Int);
+62.       OPTION(Int) fd_carry = NONE(Int);
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:61:5: 
+59.       int fds[2];
+60.       Command *head = commands;
+61. >     OPTION(Int) status = NONE(Int);
+62.       OPTION(Int) fd_carry = NONE(Int);
+63.       size_t pgid = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:62:5: 
+60.       Command *head = commands;
+61.       OPTION(Int) status = NONE(Int);
+62. >     OPTION(Int) fd_carry = NONE(Int);
+63.       size_t pgid = 0;
+64.       vec_t *pid_list = lvec_with_capacity(1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:63:5: 
+61.       OPTION(Int) status = NONE(Int);
+62.       OPTION(Int) fd_carry = NONE(Int);
+63. >     size_t pgid = 0;
+64.       vec_t *pid_list = lvec_with_capacity(1);
+65.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:64:5: 
+62.       OPTION(Int) fd_carry = NONE(Int);
+63.       size_t pgid = 0;
+64. >     vec_t *pid_list = lvec_with_capacity(1);
+65.   
+66.       while (head) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:66:12: Loop condition is true. Entering loop body
+64.       vec_t *pid_list = lvec_with_capacity(1);
+65.   
+66.       while (head) {
+                 ^
+67.           if (head->link == '|' && pipe(fds) == -1) {
+68.               eputstr("can't create pipe.\n");
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:67:13: Taking true branch
+65.   
+66.       while (head) {
+67.           if (head->link == '|' && pipe(fds) == -1) {
+                  ^
+68.               eputstr("can't create pipe.\n");
+69.               return NONE(Int);
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:67:34: Taking true branch
+65.   
+66.       while (head) {
+67.           if (head->link == '|' && pipe(fds) == -1) {
+                                       ^
+68.               eputstr("can't create pipe.\n");
+69.               return NONE(Int);
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:68:13: 
+66.       while (head) {
+67.           if (head->link == '|' && pipe(fds) == -1) {
+68. >             eputstr("can't create pipe.\n");
+69.               return NONE(Int);
+70.           }

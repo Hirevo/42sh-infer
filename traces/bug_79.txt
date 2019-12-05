@@ -1,0 +1,19 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:76: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_int_to_char()` at line 77, column 9 is not reachable after line 76, column 5.
+Showing all 2 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:71:1: start of procedure display_pointer()
+69.   }
+70.   
+71. > void display_pointer(flags_t *flags, va_list ap, int *count)
+72.   {
+73.       char *str;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:76:5: Skipping convert_base(): empty list of specs
+74.       char *final;
+75.   
+76.       str = convert_base(
+          ^
+77.           my_int_to_char(va_arg(ap, int)), "0123456789", "0123456789abcdef");
+78.       if ((final = malloc(sizeof(str) + 4)) == NULL)

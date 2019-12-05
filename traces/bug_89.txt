@@ -1,0 +1,41 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:112: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 107, column 22 is not reachable after line 112, column 9.
+Showing all 5 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:105:1: start of procedure get_info()
+103.   }
+104.   
+105. > t_info_pc *get_info(void)
+106.   {
+107.       t_info_pc *ret = calloc(1, sizeof(t_info_pc));
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:107:5: 
+105.   t_info_pc *get_info(void)
+106.   {
+107. >     t_info_pc *ret = calloc(1, sizeof(t_info_pc));
+108.   
+109.       if (ret == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:109:9: Taking false branch
+107.       t_info_pc *ret = calloc(1, sizeof(t_info_pc));
+108.   
+109.       if (ret == NULL)
+               ^
+110.           return NULL;
+111.       if (parse_version(ret))
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:111:9: Taking true branch
+109.       if (ret == NULL)
+110.           return NULL;
+111.       if (parse_version(ret))
+               ^
+112.           return NULL;
+113.       if (parse_ram(ret, 0))
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:112:9: 
+110.           return NULL;
+111.       if (parse_version(ret))
+112. >         return NULL;
+113.       if (parse_ram(ret, 0))
+114.           return NULL;

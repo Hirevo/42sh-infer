@@ -1,0 +1,81 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:23: error: MEMORY_LEAK
+  memory dynamically allocated by call to `ljson_item_new()` at line 23, column 43 is not reachable after line 23, column 22.
+Showing all 10 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:10:1: start of procedure ljson_parse_elem()
+8.   #include "../intern_json.h"
+9.   
+10. > int ljson_parse_elem(char *raw, int idx, hmap_t *root)
+11.   {
+12.       json_type_t type;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:16:5: 
+14.       void *data;
+15.   
+16. >     idx = ljson_parse_str(raw, idx, (void **)&key);
+17.       if (idx == -1 || lhmap_get(root, key) != NULL || raw[idx++] != ':')
+18.           return (-1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:17:9: Taking false branch
+15.   
+16.       idx = ljson_parse_str(raw, idx, (void **)&key);
+17.       if (idx == -1 || lhmap_get(root, key) != NULL || raw[idx++] != ':')
+              ^
+18.           return (-1);
+19.       type = ljson_find_type(raw, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:17:22: Taking false branch
+15.   
+16.       idx = ljson_parse_str(raw, idx, (void **)&key);
+17.       if (idx == -1 || lhmap_get(root, key) != NULL || raw[idx++] != ':')
+                           ^
+18.           return (-1);
+19.       type = ljson_find_type(raw, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:17:54: Taking false branch
+15.   
+16.       idx = ljson_parse_str(raw, idx, (void **)&key);
+17.       if (idx == -1 || lhmap_get(root, key) != NULL || raw[idx++] != ':')
+                                                           ^
+18.           return (-1);
+19.       type = ljson_find_type(raw, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:19:5: Skipping ljson_find_type(): empty list of specs
+17.       if (idx == -1 || lhmap_get(root, key) != NULL || raw[idx++] != ':')
+18.           return (-1);
+19.       type = ljson_find_type(raw, idx);
+          ^
+20.       if (type == JSON_UNKNOWN)
+21.           return (-1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:20:9: Taking false branch
+18.           return (-1);
+19.       type = ljson_find_type(raw, idx);
+20.       if (type == JSON_UNKNOWN)
+              ^
+21.           return (-1);
+22.       idx = ljson_assign_value(raw, idx, type, &data);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:22:5: 
+20.       if (type == JSON_UNKNOWN)
+21.           return (-1);
+22. >     idx = ljson_assign_value(raw, idx, type, &data);
+23.       if (idx == -1 || lhmap_set(root, key, ljson_item_new(type, data)) == false)
+24.           return (-1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:23:9: Taking false branch
+21.           return (-1);
+22.       idx = ljson_assign_value(raw, idx, type, &data);
+23.       if (idx == -1 || lhmap_set(root, key, ljson_item_new(type, data)) == false)
+              ^
+24.           return (-1);
+25.       free(key);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:23:22: Skipping lhmap_set(): empty list of specs
+21.           return (-1);
+22.       idx = ljson_assign_value(raw, idx, type, &data);
+23.       if (idx == -1 || lhmap_set(root, key, ljson_item_new(type, data)) == false)
+                           ^
+24.           return (-1);
+25.       free(key);

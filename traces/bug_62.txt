@@ -1,0 +1,11 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_put_nbr.c:80: error: UNINITIALIZED_VALUE
+  The value read from isNegative was never initialized.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_put_nbr.c:80:27: 
+78.               i /= 10;
+79.           }
+80. >     (isNegative == '-') ? resp[size--] = isNegative : 0;
+81.       return (resp + size + 1);
+82.   }

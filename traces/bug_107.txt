@@ -1,0 +1,25 @@
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:275: error: NULL_DEREFERENCE
+  pointer `prefix` last assigned on line 274 could be null and is dereferenced by call to `strlen()` at line 275, column 9.
+Showing all 3 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:271:1: start of procedure complete_choices()
+269.   }
+270.   
+271. > static OPTION(CharPtr)
+272.       complete_choices(Shell *shell, char *line, Token token, vec_t *matches)
+273.   {
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:274:5: 
+272.       complete_choices(Shell *shell, char *line, Token token, vec_t *matches)
+273.   {
+274. >     char *prefix = lvec_reduce(matches, prefix_match, 0, 0);
+275.       if (strlen(prefix) > strlen(token.token)) {
+276.           OPTION(CharPtr) opt = complete_forward(shell, line, token, prefix);
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:275:9: 
+273.   {
+274.       char *prefix = lvec_reduce(matches, prefix_match, 0, 0);
+275. >     if (strlen(prefix) > strlen(token.token)) {
+276.           OPTION(CharPtr) opt = complete_forward(shell, line, token, prefix);
+277.           if (IS_NONE(opt)) {

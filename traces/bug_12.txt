@@ -1,0 +1,120 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:25: error: MEMORY_LEAK
+  memory dynamically allocated by call to `int_toc()` at line 25, column 27 is not reachable after line 25, column 5.
+Showing all 15 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:12:1: start of procedure get_resp()
+10.   #include <stdlib.h>
+11.   
+12. > static char *get_resp(t_info_pc *info)
+13.   {
+14.       char *ret = my_fstrcat("{\"hostname\" : \"", info->hostname, 3);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:14:5: Skipping my_fstrcat(): empty list of specs
+12.   static char *get_resp(t_info_pc *info)
+13.   {
+14.       char *ret = my_fstrcat("{\"hostname\" : \"", info->hostname, 3);
+          ^
+15.   
+16.       ret = my_fstrcat(ret, "\", \"os\" : \"", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:16:5: Skipping my_fstrcat(): empty list of specs
+14.       char *ret = my_fstrcat("{\"hostname\" : \"", info->hostname, 3);
+15.   
+16.       ret = my_fstrcat(ret, "\", \"os\" : \"", 1);
+          ^
+17.       ret = (info->os) ? my_fstrcat(ret, info->os, 2) : ret;
+18.       ret = my_fstrcat(ret, "\", \"platform\" : \"", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:17:11: Condition is true
+15.   
+16.       ret = my_fstrcat(ret, "\", \"os\" : \"", 1);
+17.       ret = (info->os) ? my_fstrcat(ret, info->os, 2) : ret;
+                ^
+18.       ret = my_fstrcat(ret, "\", \"platform\" : \"", 1);
+19.       ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:17:5: 
+15.   
+16.       ret = my_fstrcat(ret, "\", \"os\" : \"", 1);
+17. >     ret = (info->os) ? my_fstrcat(ret, info->os, 2) : ret;
+18.       ret = my_fstrcat(ret, "\", \"platform\" : \"", 1);
+19.       ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:18:5: Skipping my_fstrcat(): empty list of specs
+16.       ret = my_fstrcat(ret, "\", \"os\" : \"", 1);
+17.       ret = (info->os) ? my_fstrcat(ret, info->os, 2) : ret;
+18.       ret = my_fstrcat(ret, "\", \"platform\" : \"", 1);
+          ^
+19.       ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+20.       ret = my_fstrcat(ret, "\", \"version\" : \"", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:19:11: Condition is true
+17.       ret = (info->os) ? my_fstrcat(ret, info->os, 2) : ret;
+18.       ret = my_fstrcat(ret, "\", \"platform\" : \"", 1);
+19.       ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+                ^
+20.       ret = my_fstrcat(ret, "\", \"version\" : \"", 1);
+21.       ret = (info->version) ? my_fstrcat(ret, info->version, 2) : ret;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:19:5: 
+17.       ret = (info->os) ? my_fstrcat(ret, info->os, 2) : ret;
+18.       ret = my_fstrcat(ret, "\", \"platform\" : \"", 1);
+19. >     ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+20.       ret = my_fstrcat(ret, "\", \"version\" : \"", 1);
+21.       ret = (info->version) ? my_fstrcat(ret, info->version, 2) : ret;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:20:5: Skipping my_fstrcat(): empty list of specs
+18.       ret = my_fstrcat(ret, "\", \"platform\" : \"", 1);
+19.       ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+20.       ret = my_fstrcat(ret, "\", \"version\" : \"", 1);
+          ^
+21.       ret = (info->version) ? my_fstrcat(ret, info->version, 2) : ret;
+22.       ret = my_fstrcat(ret, "\", \"memory_total\" : ", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:21:11: Condition is true
+19.       ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+20.       ret = my_fstrcat(ret, "\", \"version\" : \"", 1);
+21.       ret = (info->version) ? my_fstrcat(ret, info->version, 2) : ret;
+                ^
+22.       ret = my_fstrcat(ret, "\", \"memory_total\" : ", 1);
+23.       ret = my_fstrcat(ret, int_toc(info->mem_total), 2);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:21:5: 
+19.       ret = (info->plateforme) ? my_fstrcat(ret, info->plateforme, 2) : ret;
+20.       ret = my_fstrcat(ret, "\", \"version\" : \"", 1);
+21. >     ret = (info->version) ? my_fstrcat(ret, info->version, 2) : ret;
+22.       ret = my_fstrcat(ret, "\", \"memory_total\" : ", 1);
+23.       ret = my_fstrcat(ret, int_toc(info->mem_total), 2);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:22:5: Skipping my_fstrcat(): empty list of specs
+20.       ret = my_fstrcat(ret, "\", \"version\" : \"", 1);
+21.       ret = (info->version) ? my_fstrcat(ret, info->version, 2) : ret;
+22.       ret = my_fstrcat(ret, "\", \"memory_total\" : ", 1);
+          ^
+23.       ret = my_fstrcat(ret, int_toc(info->mem_total), 2);
+24.       ret = my_fstrcat(ret, ", \"memory_available\" : ", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:23:5: Skipping my_fstrcat(): empty list of specs
+21.       ret = (info->version) ? my_fstrcat(ret, info->version, 2) : ret;
+22.       ret = my_fstrcat(ret, "\", \"memory_total\" : ", 1);
+23.       ret = my_fstrcat(ret, int_toc(info->mem_total), 2);
+          ^
+24.       ret = my_fstrcat(ret, ", \"memory_available\" : ", 1);
+25.       ret = my_fstrcat(ret, int_toc(info->mem_available), 2);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:24:5: Skipping my_fstrcat(): empty list of specs
+22.       ret = my_fstrcat(ret, "\", \"memory_total\" : ", 1);
+23.       ret = my_fstrcat(ret, int_toc(info->mem_total), 2);
+24.       ret = my_fstrcat(ret, ", \"memory_available\" : ", 1);
+          ^
+25.       ret = my_fstrcat(ret, int_toc(info->mem_available), 2);
+26.       ret = my_fstrcat(ret, ", \"process\" : \"", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:25:5: Skipping my_fstrcat(): empty list of specs
+23.       ret = my_fstrcat(ret, int_toc(info->mem_total), 2);
+24.       ret = my_fstrcat(ret, ", \"memory_available\" : ", 1);
+25.       ret = my_fstrcat(ret, int_toc(info->mem_available), 2);
+          ^
+26.       ret = my_fstrcat(ret, ", \"process\" : \"", 1);
+27.       ret = (info->proco) ? my_fstrcat(ret, info->proco, 2) : ret;

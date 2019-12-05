@@ -1,0 +1,42 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:22: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 18, column 19 is not reachable after line 22, column 5.
+Showing all 5 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:10:1: start of procedure internal_ljson_serialize_object_helper()
+8.   #include "../intern_json.h"
+9.   
+10. > static int internal_ljson_serialize_object_helper(
+11.       char **output, int idx, vec_t *keys, vec_t *values)
+12.   {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:13:9: Taking false branch
+11.       char **output, int idx, vec_t *keys, vec_t *values)
+12.   {
+13.       if (idx) {
+              ^
+14.           *output = lstr_append(*output, ",");
+15.           if (*output == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:18:9: 
+16.               return (-1);
+17.       } else {
+18. >         *output = lstr_append(*output, "");
+19.           if (*output == NULL)
+20.               return (-1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:19:13: Taking false branch
+17.       } else {
+18.           *output = lstr_append(*output, "");
+19.           if (*output == NULL)
+                  ^
+20.               return (-1);
+21.       }
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:22:5: Skipping lstr_concat(): empty list of specs
+20.               return (-1);
+21.       }
+22.       *output = lstr_concat(
+          ^
+23.           *output, 3, LSTR_CHAR, '"', LSTR_STR, keys->arr[idx], LSTR_STR, "\":");
+24.       if (*output == NULL ||

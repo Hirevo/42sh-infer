@@ -1,0 +1,79 @@
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:54: error: RESOURCE_LEAK
+  resource acquired by call to `open()` at line 50, column 14 is not released after line 54, column 5.
+Showing all 10 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:41:1: start of procedure save_alias()
+39.   }
+40.   
+41. > void save_alias(Shell *shell)
+42.   {
+43.       char *home = getenv("HOME");
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:43:5: 
+41.   void save_alias(Shell *shell)
+42.   {
+43. >     char *home = getenv("HOME");
+44.   
+45.       if (shell->tty == 0 || home == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:45:9: Taking false branch
+43.       char *home = getenv("HOME");
+44.   
+45.       if (shell->tty == 0 || home == 0)
+              ^
+46.           return;
+47.       char *path = path_join(home, ALIAS_FILE);
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:45:28: Taking false branch
+43.       char *home = getenv("HOME");
+44.   
+45.       if (shell->tty == 0 || home == 0)
+                                 ^
+46.           return;
+47.       char *path = path_join(home, ALIAS_FILE);
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:47:5: 
+45.       if (shell->tty == 0 || home == 0)
+46.           return;
+47. >     char *path = path_join(home, ALIAS_FILE);
+48.       if (path == 0)
+49.           return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:48:9: Taking false branch
+46.           return;
+47.       char *path = path_join(home, ALIAS_FILE);
+48.       if (path == 0)
+              ^
+49.           return;
+50.       int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:50:5: 
+48.       if (path == 0)
+49.           return;
+50. >     int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+51.       free(path);
+52.       if (fd == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:51:5: 
+49.           return;
+50.       int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+51. >     free(path);
+52.       if (fd == -1)
+53.           return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:52:9: Taking false branch
+50.       int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+51.       free(path);
+52.       if (fd == -1)
+              ^
+53.           return;
+54.       lhmap_for_each(
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:54:5: Skipping lhmap_for_each(): empty list of specs
+52.       if (fd == -1)
+53.           return;
+54.       lhmap_for_each(
+          ^
+55.           shell->aliases, (void (*)(void *, char *, void *))(write_alias), &fd);
+56.       close(fd);

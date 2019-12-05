@@ -1,0 +1,34 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c:21: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 16, column 11 is not reachable after line 21, column 5.
+Showing all 4 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c:12:1: start of procedure get_prompt_cli()
+10.   #include <string.h>
+11.   
+12. > char *get_prompt_cli(t_client *client)
+13.   {
+14.       char *ret;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c:16:5: 
+14.       char *ret;
+15.   
+16. >     ret = strdup("(\e[32;1m");
+17.       if (client->name) {
+18.           ret = my_fstrcat(ret, client->name, 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c:17:9: Taking false branch
+15.   
+16.       ret = strdup("(\e[32;1m");
+17.       if (client->name) {
+              ^
+18.           ret = my_fstrcat(ret, client->name, 1);
+19.           ret = my_fstrcat(ret, "@", 1);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c:21:5: Skipping my_fstrcat(): empty list of specs
+19.           ret = my_fstrcat(ret, "@", 1);
+20.       }
+21.       ret = my_fstrcat(ret, "DualCast\e[0m) $> ", 1);
+          ^
+22.       client->len_prompt = strlen(ret);
+23.       return ret;

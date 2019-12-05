@@ -1,0 +1,50 @@
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:44: error: MEMORY_LEAK
+  memory dynamically allocated by call to `getcwd()` at line 39, column 18 is not reachable after line 44, column 9.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:37:1: start of procedure get_current()
+35.   }
+36.   
+37. > char *get_current(char *current, char *home)
+38.   {
+39.       char *temp = getcwd(0, 0);
+
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:39:5: 
+37.   char *get_current(char *current, char *home)
+38.   {
+39. >     char *temp = getcwd(0, 0);
+40.   
+41.       if (temp == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:41:9: Taking false branch
+39.       char *temp = getcwd(0, 0);
+40.   
+41.       if (temp == NULL)
+              ^
+42.           return NULL;
+43.       if (home && strcmp(home, "/"))
+
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:43:9: Taking true branch
+41.       if (temp == NULL)
+42.           return NULL;
+43.       if (home && strcmp(home, "/"))
+              ^
+44.           temp = detect_home(temp, home);
+45.       current[0] = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:43:17: Taking true branch
+41.       if (temp == NULL)
+42.           return NULL;
+43.       if (home && strcmp(home, "/"))
+                      ^
+44.           temp = detect_home(temp, home);
+45.       current[0] = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:44:9: Skipping detect_home(): empty list of specs
+42.           return NULL;
+43.       if (home && strcmp(home, "/"))
+44.           temp = detect_home(temp, home);
+              ^
+45.       current[0] = 0;
+46.       current = strcat(current, temp);

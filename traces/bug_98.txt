@@ -1,0 +1,72 @@
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:125: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `lvec_with_capacity()` at line 115, column 24 is not reachable after line 125, column 17.
+Showing all 9 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:113:1: start of procedure split_fragments()
+111.   }
+112.   
+113. > vec_t *split_fragments(char *str, int estimate)
+114.   {
+115.       vec_t *fragments = lvec_with_capacity(estimate);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:115:5: 
+113.   vec_t *split_fragments(char *str, int estimate)
+114.   {
+115. >     vec_t *fragments = lvec_with_capacity(estimate);
+116.       if (fragments == NULL)
+117.           return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:116:9: Taking false branch
+114.   {
+115.       vec_t *fragments = lvec_with_capacity(estimate);
+116.       if (fragments == NULL)
+               ^
+117.           return NULL;
+118.       size_t i = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:118:5: 
+116.       if (fragments == NULL)
+117.           return NULL;
+118. >     size_t i = 0;
+119.       while (str[i])
+120.           if (is_space(str[i])) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:119:12: Loop condition is true. Entering loop body
+117.           return NULL;
+118.       size_t i = 0;
+119.       while (str[i])
+                  ^
+120.           if (is_space(str[i])) {
+121.               i += 1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:120:13: Taking false branch
+118.       size_t i = 0;
+119.       while (str[i])
+120.           if (is_space(str[i])) {
+                   ^
+121.               i += 1;
+122.           } else {
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:123:13: Skipping span_fragment(): empty list of specs
+121.               i += 1;
+122.           } else {
+123.               OPTION(SizeT) len = span_fragment(str + i);
+                   ^
+124.               if (IS_NONE(len))
+125.                   return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:124:17: Taking true branch
+122.           } else {
+123.               OPTION(SizeT) len = span_fragment(str + i);
+124.               if (IS_NONE(len))
+                       ^
+125.                   return NULL;
+126.               char *arg = strndup(str + i, OPT_UNWRAP(len));
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:125:17: 
+123.               OPTION(SizeT) len = span_fragment(str + i);
+124.               if (IS_NONE(len))
+125. >                 return NULL;
+126.               char *arg = strndup(str + i, OPT_UNWRAP(len));
+127.               if (arg == NULL) {

@@ -1,0 +1,167 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:34: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 32, column 15 is not reachable after line 34, column 13.
+Showing all 22 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:21:1: start of procedure lstr_replace()
+19.    * **Does directly modify the current string.**
+20.    **/
+21. > char *lstr_replace(char *this, const char *old, const char *new)
+22.   {
+23.       char *ret = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:23:5: 
+21.   char *lstr_replace(char *this, const char *old, const char *new)
+22.   {
+23. >     char *ret = 0;
+24.       int idx = 0;
+25.       int offs = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:24:5: 
+22.   {
+23.       char *ret = 0;
+24. >     int idx = 0;
+25.       int offs = 0;
+26.   
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:25:5: 
+23.       char *ret = 0;
+24.       int idx = 0;
+25. >     int offs = 0;
+26.   
+27.       if (this == NULL || old == NULL || new == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:27:9: Taking false branch
+25.       int offs = 0;
+26.   
+27.       if (this == NULL || old == NULL || new == NULL)
+              ^
+28.           return (NULL);
+29.       while (idx != -1) {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:27:25: Taking false branch
+25.       int offs = 0;
+26.   
+27.       if (this == NULL || old == NULL || new == NULL)
+                              ^
+28.           return (NULL);
+29.       while (idx != -1) {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:27:40: Taking false branch
+25.       int offs = 0;
+26.   
+27.       if (this == NULL || old == NULL || new == NULL)
+                                             ^
+28.           return (NULL);
+29.       while (idx != -1) {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:29:12: Loop condition is true. Entering loop body
+27.       if (this == NULL || old == NULL || new == NULL)
+28.           return (NULL);
+29.       while (idx != -1) {
+                 ^
+30.           if (assign(&idx, lstr_index_of(this, offs, old)) == -1)
+31.               break;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:30:13: Taking false branch
+28.           return (NULL);
+29.       while (idx != -1) {
+30.           if (assign(&idx, lstr_index_of(this, offs, old)) == -1)
+                  ^
+31.               break;
+32.           ret = calloc(strlen(this) - strlen(old) + strlen(new) + 1, 1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:32:9: 
+30.           if (assign(&idx, lstr_index_of(this, offs, old)) == -1)
+31.               break;
+32. >         ret = calloc(strlen(this) - strlen(old) + strlen(new) + 1, 1);
+33.           if (ret == NULL)
+34.               return (NULL);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:33:13: Taking false branch
+31.               break;
+32.           ret = calloc(strlen(this) - strlen(old) + strlen(new) + 1, 1);
+33.           if (ret == NULL)
+                  ^
+34.               return (NULL);
+35.           ret = strncpy(ret, this, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:35:9: 
+33.           if (ret == NULL)
+34.               return (NULL);
+35. >         ret = strncpy(ret, this, idx);
+36.           ret[idx] = 0;
+37.           ret = strcat(strcat(ret, new), this + idx + strlen(old));
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:36:9: 
+34.               return (NULL);
+35.           ret = strncpy(ret, this, idx);
+36. >         ret[idx] = 0;
+37.           ret = strcat(strcat(ret, new), this + idx + strlen(old));
+38.           free(this);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:37:9: 
+35.           ret = strncpy(ret, this, idx);
+36.           ret[idx] = 0;
+37. >         ret = strcat(strcat(ret, new), this + idx + strlen(old));
+38.           free(this);
+39.           this = ret;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:38:9: 
+36.           ret[idx] = 0;
+37.           ret = strcat(strcat(ret, new), this + idx + strlen(old));
+38. >         free(this);
+39.           this = ret;
+40.           offs = idx + strlen(new);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:39:9: 
+37.           ret = strcat(strcat(ret, new), this + idx + strlen(old));
+38.           free(this);
+39. >         this = ret;
+40.           offs = idx + strlen(new);
+41.       }
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:40:9: 
+38.           free(this);
+39.           this = ret;
+40. >         offs = idx + strlen(new);
+41.       }
+42.       return (this);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:29:12: Loop condition is true. Entering loop body
+27.       if (this == NULL || old == NULL || new == NULL)
+28.           return (NULL);
+29.       while (idx != -1) {
+                 ^
+30.           if (assign(&idx, lstr_index_of(this, offs, old)) == -1)
+31.               break;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:30:13: Taking false branch
+28.           return (NULL);
+29.       while (idx != -1) {
+30.           if (assign(&idx, lstr_index_of(this, offs, old)) == -1)
+                  ^
+31.               break;
+32.           ret = calloc(strlen(this) - strlen(old) + strlen(new) + 1, 1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:32:9: 
+30.           if (assign(&idx, lstr_index_of(this, offs, old)) == -1)
+31.               break;
+32. >         ret = calloc(strlen(this) - strlen(old) + strlen(new) + 1, 1);
+33.           if (ret == NULL)
+34.               return (NULL);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:33:13: Taking true branch
+31.               break;
+32.           ret = calloc(strlen(this) - strlen(old) + strlen(new) + 1, 1);
+33.           if (ret == NULL)
+                  ^
+34.               return (NULL);
+35.           ret = strncpy(ret, this, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:34:13: 
+32.           ret = calloc(strlen(this) - strlen(old) + strlen(new) + 1, 1);
+33.           if (ret == NULL)
+34. >             return (NULL);
+35.           ret = strncpy(ret, this, idx);
+36.           ret[idx] = 0;

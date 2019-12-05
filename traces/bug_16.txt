@@ -1,0 +1,63 @@
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:22: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_split()` at line 16, column 20 is not reachable after line 22, column 13.
+Showing all 8 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:14:1: start of procedure find_first_cmd()
+12.   #include <string.h>
+13.   
+14. > static int find_first_cmd(const char *path, char *str)
+15.   {
+16.       vec_t *paths = lstr_split(path, ":");
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:16:5: 
+14.   static int find_first_cmd(const char *path, char *str)
+15.   {
+16. >     vec_t *paths = lstr_split(path, ":");
+17.   
+18.       for (size_t i = 0; i < lvec_size(paths); i++) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:18:10: 
+16.       vec_t *paths = lstr_split(path, ":");
+17.   
+18. >     for (size_t i = 0; i < lvec_size(paths); i++) {
+19.           char *cur = path_join(lvec_at(paths, i), str);
+20.           if (access(cur, F_OK | X_OK) == 0) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:18:24: Loop condition is true. Entering loop body
+16.       vec_t *paths = lstr_split(path, ":");
+17.   
+18.       for (size_t i = 0; i < lvec_size(paths); i++) {
+                             ^
+19.           char *cur = path_join(lvec_at(paths, i), str);
+20.           if (access(cur, F_OK | X_OK) == 0) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:19:9: 
+17.   
+18.       for (size_t i = 0; i < lvec_size(paths); i++) {
+19. >         char *cur = path_join(lvec_at(paths, i), str);
+20.           if (access(cur, F_OK | X_OK) == 0) {
+21.               putstr("%s\n", cur);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:20:13: Taking true branch
+18.       for (size_t i = 0; i < lvec_size(paths); i++) {
+19.           char *cur = path_join(lvec_at(paths, i), str);
+20.           if (access(cur, F_OK | X_OK) == 0) {
+                  ^
+21.               putstr("%s\n", cur);
+22.               lvec_clear(paths, true);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:21:13: 
+19.           char *cur = path_join(lvec_at(paths, i), str);
+20.           if (access(cur, F_OK | X_OK) == 0) {
+21. >             putstr("%s\n", cur);
+22.               lvec_clear(paths, true);
+23.               lvec_drop(paths);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:22:13: Skipping lvec_clear(): empty list of specs
+20.           if (access(cur, F_OK | X_OK) == 0) {
+21.               putstr("%s\n", cur);
+22.               lvec_clear(paths, true);
+                  ^
+23.               lvec_drop(paths);
+24.               return 1;

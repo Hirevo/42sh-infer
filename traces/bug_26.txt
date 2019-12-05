@@ -1,0 +1,41 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:38: error: RESOURCE_LEAK
+  resource acquired to `socket` by call to `init_dualcast()` at line 24, column 9 is not released after line 38, column 1.
+Showing all 5 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:15:1: start of procedure launch_dc_server()
+13.   #include <stdlib.h>
+14.   
+15. > int launch_dc_server(void)
+16.   {
+17.       fd_set rdfs;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:22:9: Taking false branch
+20.       char *code;
+21.   
+22.       if ((code = get_password()) == NULL)
+              ^
+23.           return 1;
+24.       if (init_dualcast(&socket) == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:24:9: Taking true branch
+22.       if ((code = get_password()) == NULL)
+23.           return 1;
+24.       if (init_dualcast(&socket) == -1)
+              ^
+25.           return 1;
+26.       putstr("Dualcast ready !\n"
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:25:9: 
+23.           return 1;
+24.       if (init_dualcast(&socket) == -1)
+25. >         return 1;
+26.       putstr("Dualcast ready !\n"
+27.              "Here is the session token: %s\n"
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:38:1: return from a call to launch_dc_server
+36.       putstr("End of session.\n");
+37.       return 0;
+38. > }
+39.   
+40.   static int launch_dc_client(char *addr)

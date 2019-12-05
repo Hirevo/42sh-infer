@@ -1,0 +1,81 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:90: error: NULL_DEREFERENCE
+  pointer `*ret[i]` last assigned on line 89 could be null and is dereferenced at line 90, column 9.
+Showing all 10 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:74:1: start of procedure my_split_mulchar()
+72.   }
+73.   
+74. > char **my_split_mulchar(char *str, char *sep)
+75.   {
+76.       int i = -1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:76:5: 
+74.   char **my_split_mulchar(char *str, char *sep)
+75.   {
+76. >     int i = -1;
+77.       int j;
+78.       int index;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:81:9: Taking false branch
+79.       char **ret;
+80.   
+81.       if (str == NULL)
+              ^
+82.           return NULL;
+83.       ret = calloc(nb_par(str, sep) + 1, sizeof(char *));
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:83:5: Skipping nb_par(): empty list of specs
+81.       if (str == NULL)
+82.           return NULL;
+83.       ret = calloc(nb_par(str, sep) + 1, sizeof(char *));
+          ^
+84.       if (ret == NULL)
+85.           return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:84:9: Taking false branch
+82.           return NULL;
+83.       ret = calloc(nb_par(str, sep) + 1, sizeof(char *));
+84.       if (ret == NULL)
+              ^
+85.           return NULL;
+86.       ret[nb_par(str, sep)] = NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:86:5: Skipping nb_par(): empty list of specs
+84.       if (ret == NULL)
+85.           return NULL;
+86.       ret[nb_par(str, sep)] = NULL;
+          ^
+87.       while (++i < nb_par(str, sep)) {
+88.           j = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:87:12: Loop condition is true. Entering loop body
+85.           return NULL;
+86.       ret[nb_par(str, sep)] = NULL;
+87.       while (++i < nb_par(str, sep)) {
+                 ^
+88.           j = 0;
+89.           ret[i] = calloc(len_child(str, sep, i) + 1, sizeof(char));
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:88:9: 
+86.       ret[nb_par(str, sep)] = NULL;
+87.       while (++i < nb_par(str, sep)) {
+88. >         j = 0;
+89.           ret[i] = calloc(len_child(str, sep, i) + 1, sizeof(char));
+90.           ret[i][len_child(str, sep, i)] = '\0';
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:89:9: Skipping len_child(): empty list of specs
+87.       while (++i < nb_par(str, sep)) {
+88.           j = 0;
+89.           ret[i] = calloc(len_child(str, sep, i) + 1, sizeof(char));
+              ^
+90.           ret[i][len_child(str, sep, i)] = '\0';
+91.           index = index_child(str, sep, i);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:90:9: Skipping len_child(): empty list of specs
+88.           j = 0;
+89.           ret[i] = calloc(len_child(str, sep, i) + 1, sizeof(char));
+90.           ret[i][len_child(str, sep, i)] = '\0';
+              ^
+91.           index = index_child(str, sep, i);
+92.           while (j < len_child(str, sep, i)) {

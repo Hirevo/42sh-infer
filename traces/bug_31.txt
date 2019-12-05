@@ -1,0 +1,78 @@
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:38: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 37, column 25 is not reachable after line 38, column 17.
+Showing all 10 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:20:1: start of procedure set_b()
+18.   }
+19.   
+20. > int set_b(Shell *shell, vec_t *args)
+21.   {
+22.       int ret = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:22:5: 
+20.   int set_b(Shell *shell, vec_t *args)
+21.   {
+22. >     int ret = 0;
+23.   
+24.       if (lvec_size(args) == 1) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:24:9: Taking false branch
+22.       int ret = 0;
+23.   
+24.       if (lvec_size(args) == 1) {
+              ^
+25.           lhmap_for_each(shell->vars, display_var, NULL);
+26.           return 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:28:14: 
+26.           return 0;
+27.       } else {
+28. >         for (size_t i = 1; i < lvec_size(args); i++) {
+29.               // printf("arg: '%zu'\n", strlen(lvec_at(args, 1)));
+30.               ssize_t idx = lstr_index_of(lvec_at(args, i), 0, "=");
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:28:28: Loop condition is true. Entering loop body
+26.           return 0;
+27.       } else {
+28.           for (size_t i = 1; i < lvec_size(args); i++) {
+                                 ^
+29.               // printf("arg: '%zu'\n", strlen(lvec_at(args, 1)));
+30.               ssize_t idx = lstr_index_of(lvec_at(args, i), 0, "=");
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:30:13: 
+28.           for (size_t i = 1; i < lvec_size(args); i++) {
+29.               // printf("arg: '%zu'\n", strlen(lvec_at(args, 1)));
+30. >             ssize_t idx = lstr_index_of(lvec_at(args, i), 0, "=");
+31.               if (idx == -1) {
+32.                   eputstr("set: missing value\n");
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:31:17: Taking false branch
+29.               // printf("arg: '%zu'\n", strlen(lvec_at(args, 1)));
+30.               ssize_t idx = lstr_index_of(lvec_at(args, i), 0, "=");
+31.               if (idx == -1) {
+                      ^
+32.                   eputstr("set: missing value\n");
+33.                   ret = 1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:36:13: 
+34.                   continue;
+35.               }
+36. >             char *key = lstr_substr(lvec_at(args, i), 0, idx);
+37.               char *val = strdup(lvec_at(args, i) + idx + 1);
+38.               if (key == 0 || val == 0 || check_env_error("set", key))
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:37:13: 
+35.               }
+36.               char *key = lstr_substr(lvec_at(args, i), 0, idx);
+37. >             char *val = strdup(lvec_at(args, i) + idx + 1);
+38.               if (key == 0 || val == 0 || check_env_error("set", key))
+39.                   ret = 1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:38:17: Taking true branch
+36.               char *key = lstr_substr(lvec_at(args, i), 0, idx);
+37.               char *val = strdup(lvec_at(args, i) + idx + 1);
+38.               if (key == 0 || val == 0 || check_env_error("set", key))
+                      ^
+39.                   ret = 1;
+40.               else {

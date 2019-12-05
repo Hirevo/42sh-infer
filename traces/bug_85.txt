@@ -1,0 +1,48 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:91: error: MEMORY_LEAK
+  memory dynamically allocated by call to `int_toc()` at line 91, column 35 is not reachable after line 91, column 5.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:82:1: start of procedure launch_nav()
+80.   }
+81.   
+82. > int launch_nav(char *path, int port, char **ae)
+83.   {
+84.       int pid;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:85:5: 
+83.   {
+84.       int pid;
+85. >     char **argv = calloc(3, sizeof(char *));
+86.   
+87.       if (argv == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:87:9: Taking false branch
+85.       char **argv = calloc(3, sizeof(char *));
+86.   
+87.       if (argv == NULL)
+              ^
+88.           return 1;
+89.       argv[0] = path;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:89:5: 
+87.       if (argv == NULL)
+88.           return 1;
+89. >     argv[0] = path;
+90.       argv[1] = strdup(PATH_WEB);
+91.       argv[1] = my_fstrcat(argv[1], int_toc(port), 2);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:90:5: 
+88.           return 1;
+89.       argv[0] = path;
+90. >     argv[1] = strdup(PATH_WEB);
+91.       argv[1] = my_fstrcat(argv[1], int_toc(port), 2);
+92.       pid = fork();
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:91:5: Skipping my_fstrcat(): empty list of specs
+89.       argv[0] = path;
+90.       argv[1] = strdup(PATH_WEB);
+91.       argv[1] = my_fstrcat(argv[1], int_toc(port), 2);
+          ^
+92.       pid = fork();
+93.       if (pid == 0) {

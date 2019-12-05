@@ -1,0 +1,26 @@
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:28: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lhmap_with_capacity()` at line 27, column 23 is not reachable after line 28, column 5.
+Showing all 3 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:25:1: start of procedure init_builtins()
+23.   }
+24.   
+25. > void init_builtins(Shell *shell)
+26.   {
+27.       shell->builtins = lhmap_with_capacity(19);
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:27:5: 
+25.   void init_builtins(Shell *shell)
+26.   {
+27. >     shell->builtins = lhmap_with_capacity(19);
+28.       lhmap_set(shell->builtins, "alias", alias_b);
+29.       lhmap_set(shell->builtins, "unalias", unalias_b);
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:28:5: Skipping lhmap_set(): empty list of specs
+26.   {
+27.       shell->builtins = lhmap_with_capacity(19);
+28.       lhmap_set(shell->builtins, "alias", alias_b);
+          ^
+29.       lhmap_set(shell->builtins, "unalias", unalias_b);
+30.       lhmap_set(shell->builtins, "builtins", builtins_b);

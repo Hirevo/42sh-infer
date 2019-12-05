@@ -1,0 +1,12 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/clear.c:18: error: DEAD_STORE
+  The value written to &idx (type int) is never used.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/clear.c:18:41: Write of unused value
+16.           *escape = str[idx];
+17.       else if (comment_type != -1) {
+18.           str = ljson_remove_comment(str, idx--, comment_type);
+                                              ^
+19.           if (str == NULL)
+20.               return (false);

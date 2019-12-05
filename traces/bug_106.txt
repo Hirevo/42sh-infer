@@ -1,0 +1,49 @@
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:244: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 240, column 15 is not reachable after line 244, column 13.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:229:1: start of procedure render_match()
+227.   }
+228.   
+229. > static void *render_match(void *ctx, void *acc, void *elem, size_t idx)
+230.   {
+231.       Token *token = ctx;
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:231:5: 
+229.   static void *render_match(void *ctx, void *acc, void *elem, size_t idx)
+230.   {
+231. >     Token *token = ctx;
+232.   
+233.       if (idx == 0) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:233:9: Taking false branch
+231.       Token *token = ctx;
+232.   
+233.       if (idx == 0) {
+               ^
+234.           if (token->is_command) {
+235.               return sanitize_double_quotes(elem, false);
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:240:9: 
+238.           }
+239.       } else {
+240. >         acc = lstr_append(acc, "\\\\n");
+241.           if (token->is_command) {
+242.               return lstr_append(acc, sanitize_double_quotes(elem, false));
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:241:13: Taking false branch
+239.       } else {
+240.           acc = lstr_append(acc, "\\\\n");
+241.           if (token->is_command) {
+                   ^
+242.               return lstr_append(acc, sanitize_double_quotes(elem, false));
+243.           } else {
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:244:13: Skipping sanitize_double_quotes(): empty list of specs
+242.               return lstr_append(acc, sanitize_double_quotes(elem, false));
+243.           } else {
+244.               return lstr_append(
+                   ^
+245.                   acc, sanitize_double_quotes(basename(elem), false));
+246.           }

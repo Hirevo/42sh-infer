@@ -1,0 +1,12 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config/config.c:42: error: DEAD_STORE
+  The value written to &rc_file (type OptionCharPtr) is never used.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config/config.c:42:5: Write of unused value
+40.       json_item_t *history_item = lhmap_get(root->data, "history_file");
+41.   
+42.       OPTION(CharPtr)
+          ^
+43.       rc_file = (rc_item->type == JSON_STRING) ?
+44.           OPT_FROM_NULLABLE(CharPtr, strdup(rc_item->data)) :

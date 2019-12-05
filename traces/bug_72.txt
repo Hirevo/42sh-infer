@@ -1,0 +1,87 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:83: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 74, column 15 is not reachable after line 83, column 29.
+Showing all 11 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:67:1: start of procedure exec_cmd_http()
+65.   }
+66.   
+67. > void exec_cmd_http(t_socket client, t_config *config, char **arg)
+68.   {
+69.       char *cmd;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:72:5: 
+70.       char **cmd_p;
+71.   
+72. >     (void)config;
+73.       if (nb_args(arg) >= 4) {
+74.           cmd = calloc(strlen(arg[3]) + 1, sizeof(char));
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:73:9: Taking true branch
+71.   
+72.       (void)config;
+73.       if (nb_args(arg) >= 4) {
+              ^
+74.           cmd = calloc(strlen(arg[3]) + 1, sizeof(char));
+75.           if (cmd == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:74:9: 
+72.       (void)config;
+73.       if (nb_args(arg) >= 4) {
+74. >         cmd = calloc(strlen(arg[3]) + 1, sizeof(char));
+75.           if (cmd == NULL)
+76.               return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:75:13: Taking false branch
+73.       if (nb_args(arg) >= 4) {
+74.           cmd = calloc(strlen(arg[3]) + 1, sizeof(char));
+75.           if (cmd == NULL)
+                  ^
+76.               return;
+77.           urldecode(arg[3], cmd);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:77:9: Skipping urldecode(): empty list of specs
+75.           if (cmd == NULL)
+76.               return;
+77.           urldecode(arg[3], cmd);
+              ^
+78.           cmd_p = my_split_char(cmd, ' ');
+79.           if (cmd_p == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:78:9: Skipping my_split_char(): empty list of specs
+76.               return;
+77.           urldecode(arg[3], cmd);
+78.           cmd_p = my_split_char(cmd, ' ');
+              ^
+79.           if (cmd_p == NULL)
+80.               return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:79:13: Taking false branch
+77.           urldecode(arg[3], cmd);
+78.           cmd_p = my_split_char(cmd, ' ');
+79.           if (cmd_p == NULL)
+                  ^
+80.               return;
+81.           write_client(client, BASE_RESP);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:81:9: 
+79.           if (cmd_p == NULL)
+80.               return;
+81. >         write_client(client, BASE_RESP);
+82.           if (!strcmp(cmd_p[0], "cd"))
+83.               change_dir_http(client, cmd_p);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:82:14: Taking true branch
+80.               return;
+81.           write_client(client, BASE_RESP);
+82.           if (!strcmp(cmd_p[0], "cd"))
+                   ^
+83.               change_dir_http(client, cmd_p);
+84.           else
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:83:13: 
+81.           write_client(client, BASE_RESP);
+82.           if (!strcmp(cmd_p[0], "cd"))
+83. >             change_dir_http(client, cmd_p);
+84.           else
+85.               execute_http(client, cmd);

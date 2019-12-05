@@ -1,0 +1,177 @@
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:101: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lhmap_with_capacity()` at line 100, column 28 is not reachable after line 101, column 9.
+Showing all 22 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:74:1: start of procedure init()
+72.   }
+73.   
+74. > void init(Shell *shell)
+75.   {
+76.       shell->tty = isatty(0);
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:76:5: 
+74.   void init(Shell *shell)
+75.   {
+76. >     shell->tty = isatty(0);
+77.       if (shell->tty) {
+78.           if (tcsetpgrp(0, getpgid(getpid()))) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:77:9: Taking true branch
+75.   {
+76.       shell->tty = isatty(0);
+77.       if (shell->tty) {
+              ^
+78.           if (tcsetpgrp(0, getpgid(getpid()))) {
+79.               perror("tcsetpgrp");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:78:13: Taking false branch
+76.       shell->tty = isatty(0);
+77.       if (shell->tty) {
+78.           if (tcsetpgrp(0, getpgid(getpid()))) {
+                  ^
+79.               perror("tcsetpgrp");
+80.               return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:82:13: Taking false branch
+80.               return;
+81.           }
+82.           if (getenv("TERM") == NULL || setupterm(NULL, 0, NULL) == ERR) {
+                  ^
+83.               shell->ioctl = 0;
+84.               return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:82:39: Taking false branch
+80.               return;
+81.           }
+82.           if (getenv("TERM") == NULL || setupterm(NULL, 0, NULL) == ERR) {
+                                            ^
+83.               shell->ioctl = 0;
+84.               return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:86:9: Skipping tcgetattr(): method has no implementation
+84.               return;
+85.           }
+86.           shell->ioctl = tcgetattr(0, &shell->w.oterm) + 1;
+              ^
+87.           shell->w.smkx = tigetstr("smkx");
+88.           shell->w.rmkx = tigetstr("rmkx");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:87:9: Skipping tigetstr(): method has no implementation
+85.           }
+86.           shell->ioctl = tcgetattr(0, &shell->w.oterm) + 1;
+87.           shell->w.smkx = tigetstr("smkx");
+              ^
+88.           shell->w.rmkx = tigetstr("rmkx");
+89.           shell->w.clear = tigetstr("clear");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:88:9: Skipping tigetstr(): method has no implementation
+86.           shell->ioctl = tcgetattr(0, &shell->w.oterm) + 1;
+87.           shell->w.smkx = tigetstr("smkx");
+88.           shell->w.rmkx = tigetstr("rmkx");
+              ^
+89.           shell->w.clear = tigetstr("clear");
+90.           shell->w.end = tigetstr("kend");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:89:9: Skipping tigetstr(): method has no implementation
+87.           shell->w.smkx = tigetstr("smkx");
+88.           shell->w.rmkx = tigetstr("rmkx");
+89.           shell->w.clear = tigetstr("clear");
+              ^
+90.           shell->w.end = tigetstr("kend");
+91.           shell->w.home = tigetstr("khome");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:90:9: Skipping tigetstr(): method has no implementation
+88.           shell->w.rmkx = tigetstr("rmkx");
+89.           shell->w.clear = tigetstr("clear");
+90.           shell->w.end = tigetstr("kend");
+              ^
+91.           shell->w.home = tigetstr("khome");
+92.           shell->w.forw = tigetstr("cuf1");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:91:9: Skipping tigetstr(): method has no implementation
+89.           shell->w.clear = tigetstr("clear");
+90.           shell->w.end = tigetstr("kend");
+91.           shell->w.home = tigetstr("khome");
+              ^
+92.           shell->w.forw = tigetstr("cuf1");
+93.           shell->w.backw = tigetstr("cub1");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:92:9: Skipping tigetstr(): method has no implementation
+90.           shell->w.end = tigetstr("kend");
+91.           shell->w.home = tigetstr("khome");
+92.           shell->w.forw = tigetstr("cuf1");
+              ^
+93.           shell->w.backw = tigetstr("cub1");
+94.           shell->w.upw = tigetstr("kcuu1");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:93:9: Skipping tigetstr(): method has no implementation
+91.           shell->w.home = tigetstr("khome");
+92.           shell->w.forw = tigetstr("cuf1");
+93.           shell->w.backw = tigetstr("cub1");
+              ^
+94.           shell->w.upw = tigetstr("kcuu1");
+95.           shell->w.downw = tigetstr("kcud1");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:94:9: Skipping tigetstr(): method has no implementation
+92.           shell->w.forw = tigetstr("cuf1");
+93.           shell->w.backw = tigetstr("cub1");
+94.           shell->w.upw = tigetstr("kcuu1");
+              ^
+95.           shell->w.downw = tigetstr("kcud1");
+96.           shell->w.left = tigetstr("kcub1");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:95:9: Skipping tigetstr(): method has no implementation
+93.           shell->w.backw = tigetstr("cub1");
+94.           shell->w.upw = tigetstr("kcuu1");
+95.           shell->w.downw = tigetstr("kcud1");
+              ^
+96.           shell->w.left = tigetstr("kcub1");
+97.           shell->w.right = tigetstr("kcuf1");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:96:9: Skipping tigetstr(): method has no implementation
+94.           shell->w.upw = tigetstr("kcuu1");
+95.           shell->w.downw = tigetstr("kcud1");
+96.           shell->w.left = tigetstr("kcub1");
+              ^
+97.           shell->w.right = tigetstr("kcuf1");
+98.           shell->w.backsp = tigetstr("kbs");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:97:9: Skipping tigetstr(): method has no implementation
+95.           shell->w.downw = tigetstr("kcud1");
+96.           shell->w.left = tigetstr("kcub1");
+97.           shell->w.right = tigetstr("kcuf1");
+               ^
+98.           shell->w.backsp = tigetstr("kbs");
+99.           shell->w.delete = tigetstr("kdch1");
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:98:9: Skipping tigetstr(): method has no implementation
+96.           shell->w.left = tigetstr("kcub1");
+97.           shell->w.right = tigetstr("kcuf1");
+98.           shell->w.backsp = tigetstr("kbs");
+               ^
+99.           shell->w.delete = tigetstr("kdch1");
+100.           shell->w.actions = lhmap_with_capacity(8);
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:99:9: Skipping tigetstr(): method has no implementation
+97.           shell->w.right = tigetstr("kcuf1");
+98.           shell->w.backsp = tigetstr("kbs");
+99.           shell->w.delete = tigetstr("kdch1");
+               ^
+100.           shell->w.actions = lhmap_with_capacity(8);
+101.           lhmap_set(shell->w.actions, shell->w.left, action_cursor_left);
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:100:9: 
+98.           shell->w.backsp = tigetstr("kbs");
+99.           shell->w.delete = tigetstr("kdch1");
+100. >         shell->w.actions = lhmap_with_capacity(8);
+101.           lhmap_set(shell->w.actions, shell->w.left, action_cursor_left);
+102.           lhmap_set(shell->w.actions, shell->w.right, action_cursor_right);
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:101:9: Skipping lhmap_set(): empty list of specs
+99.           shell->w.delete = tigetstr("kdch1");
+100.           shell->w.actions = lhmap_with_capacity(8);
+101.           lhmap_set(shell->w.actions, shell->w.left, action_cursor_left);
+               ^
+102.           lhmap_set(shell->w.actions, shell->w.right, action_cursor_right);
+103.           lhmap_set(shell->w.actions, shell->w.upw, action_cursor_up);

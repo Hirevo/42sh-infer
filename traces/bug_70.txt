@@ -1,0 +1,173 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:85: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 65, column 20 is not reachable after line 85, column 1.
+Showing all 23 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:63:1: start of procedure core_server_dc()
+61.   }
+62.   
+63. > int core_server_dc(t_socket sock, t_socket client, fd_set *rdfs)
+64.   {
+65.       char *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:65:5: 
+63.   int core_server_dc(t_socket sock, t_socket client, fd_set *rdfs)
+64.   {
+65. >     char *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+66.       int nb_char = prompt ? strlen(prompt) : 0;
+67.       int stop = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:66:19: Condition is true
+64.   {
+65.       char *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+66.       int nb_char = prompt ? strlen(prompt) : 0;
+                        ^
+67.       int stop = 0;
+68.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:66:5: 
+64.   {
+65.       char *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+66. >     int nb_char = prompt ? strlen(prompt) : 0;
+67.       int stop = 0;
+68.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:67:5: 
+65.       char *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+66.       int nb_char = prompt ? strlen(prompt) : 0;
+67. >     int stop = 0;
+68.   
+69.       if (prompt == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:69:9: Taking false branch
+67.       int stop = 0;
+68.   
+69.       if (prompt == 0)
+              ^
+70.           return 1;
+71.       putstr(prompt);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:71:5: 
+69.       if (prompt == 0)
+70.           return 1;
+71. >     putstr(prompt);
+72.       fflush(stdout);
+73.       while (!stop) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:72:5: 
+70.           return 1;
+71.       putstr(prompt);
+72. >     fflush(stdout);
+73.       while (!stop) {
+74.           stop = init_client_dc(rdfs, &sock, &client);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:73:13: Loop condition is true. Entering loop body
+71.       putstr(prompt);
+72.       fflush(stdout);
+73.       while (!stop) {
+                  ^
+74.           stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:74:9: 
+72.       fflush(stdout);
+73.       while (!stop) {
+74. >         stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+76.               stop = 2;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:75:13: Taking false branch
+73.       while (!stop) {
+74.           stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+                  ^
+76.               stop = 2;
+77.           else if (FD_ISSET(sock, rdfs) && !stop)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:77:18: Taking false branch
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+76.               stop = 2;
+77.           else if (FD_ISSET(sock, rdfs) && !stop)
+                       ^
+78.               new_client_dc(sock);
+79.           else if (!stop)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:79:19: Taking true branch
+77.           else if (FD_ISSET(sock, rdfs) && !stop)
+78.               new_client_dc(sock);
+79.           else if (!stop)
+                        ^
+80.               stop = client_talk_dc(client, rdfs, &prompt, &nb_char);
+81.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:80:13: 
+78.               new_client_dc(sock);
+79.           else if (!stop)
+80. >             stop = client_talk_dc(client, rdfs, &prompt, &nb_char);
+81.       }
+82.       if (FD_ISSET(STDIN_FILENO, rdfs))
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:73:13: Loop condition is true. Entering loop body
+71.       putstr(prompt);
+72.       fflush(stdout);
+73.       while (!stop) {
+                  ^
+74.           stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:74:9: 
+72.       fflush(stdout);
+73.       while (!stop) {
+74. >         stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+76.               stop = 2;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:75:13: Taking true branch
+73.       while (!stop) {
+74.           stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+                  ^
+76.               stop = 2;
+77.           else if (FD_ISSET(sock, rdfs) && !stop)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:75:46: Taking true branch
+73.       while (!stop) {
+74.           stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+                                                   ^
+76.               stop = 2;
+77.           else if (FD_ISSET(sock, rdfs) && !stop)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:76:13: 
+74.           stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+76. >             stop = 2;
+77.           else if (FD_ISSET(sock, rdfs) && !stop)
+78.               new_client_dc(sock);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:73:13: Loop condition is false. Leaving loop
+71.       putstr(prompt);
+72.       fflush(stdout);
+73.       while (!stop) {
+                  ^
+74.           stop = init_client_dc(rdfs, &sock, &client);
+75.           if (FD_ISSET(STDIN_FILENO, rdfs) && !stop)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:82:9: Taking false branch
+80.               stop = client_talk_dc(client, rdfs, &prompt, &nb_char);
+81.       }
+82.       if (FD_ISSET(STDIN_FILENO, rdfs))
+              ^
+83.           free(get_next_line(0));
+84.       return 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:84:5: 
+82.       if (FD_ISSET(STDIN_FILENO, rdfs))
+83.           free(get_next_line(0));
+84. >     return 0;
+85.   }
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:85:1: return from a call to core_server_dc
+83.           free(get_next_line(0));
+84.       return 0;
+85. > }

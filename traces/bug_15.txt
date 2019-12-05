@@ -1,0 +1,39 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c:18: error: NULL_DEREFERENCE
+  pointer `*prompt` last assigned on line 17 could be null and is dereferenced by call to `strlen()` at line 18, column 16.
+Showing all 5 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c:13:1: start of procedure print_cmd()
+11.   #include <stdlib.h>
+12.   
+13. > static void print_cmd(char *buf, char **prompt, int *nb_char)
+14.   {
+15.       del_prompt(*nb_char);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c:15:5: 
+13.   static void print_cmd(char *buf, char **prompt, int *nb_char)
+14.   {
+15. >     del_prompt(*nb_char);
+16.       putstr("\r%s", buf + 4);
+17.       *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c:16:5: 
+14.   {
+15.       del_prompt(*nb_char);
+16. >     putstr("\r%s", buf + 4);
+17.       *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+18.       *nb_char = strlen(*prompt);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c:17:5: 
+15.       del_prompt(*nb_char);
+16.       putstr("\r%s", buf + 4);
+17. >     *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+18.       *nb_char = strlen(*prompt);
+19.       putstr("%s", *prompt);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c:18:5: 
+16.       putstr("\r%s", buf + 4);
+17.       *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+18. >     *nb_char = strlen(*prompt);
+19.       putstr("%s", *prompt);
+20.       fflush(stdout);

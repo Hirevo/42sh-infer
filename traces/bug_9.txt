@@ -1,0 +1,57 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:16: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_reserve()` at line 14, column 5 is not reachable after line 16, column 9.
+Showing all 7 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:10:1: start of procedure lvec_concat()
+8.   #include "vec.h"
+9.   
+10. > vec_t *lvec_concat(vec_t *this, vec_t *other)
+11.   {
+12.       if (this == 0 || other == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:12:9: Taking false branch
+10.   vec_t *lvec_concat(vec_t *this, vec_t *other)
+11.   {
+12.       if (this == 0 || other == 0)
+              ^
+13.           return (this);
+14.       lvec_reserve(this, this->size + other->size);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:12:22: Taking false branch
+10.   vec_t *lvec_concat(vec_t *this, vec_t *other)
+11.   {
+12.       if (this == 0 || other == 0)
+                           ^
+13.           return (this);
+14.       lvec_reserve(this, this->size + other->size);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:14:5: 
+12.       if (this == 0 || other == 0)
+13.           return (this);
+14. >     lvec_reserve(this, this->size + other->size);
+15.       for (size_t idx = 0; idx < other->size; idx++)
+16.           lvec_push_back(this, 1, other->arr[idx]);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:15:10: 
+13.           return (this);
+14.       lvec_reserve(this, this->size + other->size);
+15. >     for (size_t idx = 0; idx < other->size; idx++)
+16.           lvec_push_back(this, 1, other->arr[idx]);
+17.       return (this);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:15:26: Loop condition is true. Entering loop body
+13.           return (this);
+14.       lvec_reserve(this, this->size + other->size);
+15.       for (size_t idx = 0; idx < other->size; idx++)
+                               ^
+16.           lvec_push_back(this, 1, other->arr[idx]);
+17.       return (this);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:16:9: Skipping lvec_push_back(): empty list of specs
+14.       lvec_reserve(this, this->size + other->size);
+15.       for (size_t idx = 0; idx < other->size; idx++)
+16.           lvec_push_back(this, 1, other->arr[idx]);
+              ^
+17.       return (this);
+18.   }

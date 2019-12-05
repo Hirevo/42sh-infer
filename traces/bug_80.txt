@@ -1,0 +1,41 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:81: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 78, column 18 is not reachable after line 81, column 9.
+Showing all 5 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:73:1: start of procedure my_split()
+71.   }
+72.   
+73. > char **my_split(char *str, char *sep)
+74.   {
+75.       int i = -1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:75:5: 
+73.   char **my_split(char *str, char *sep)
+74.   {
+75. >     int i = -1;
+76.       int j;
+77.       int index;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:78:5: Skipping nb_par(): empty list of specs
+76.       int j;
+77.       int index;
+78.       char **ret = calloc(nb_par(str, sep) + 1, sizeof(char *));
+          ^
+79.   
+80.       if (str == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:80:9: Taking true branch
+78.       char **ret = calloc(nb_par(str, sep) + 1, sizeof(char *));
+79.   
+80.       if (str == NULL)
+              ^
+81.           return NULL;
+82.       if (ret == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:81:9: 
+79.   
+80.       if (str == NULL)
+81. >         return NULL;
+82.       if (ret == NULL)
+83.           return NULL;

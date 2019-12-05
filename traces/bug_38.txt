@@ -1,0 +1,57 @@
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:37: error: MEMORY_LEAK
+  memory dynamically allocated by call to `ast_level()` at line 35, column 15 is not reachable after line 37, column 5.
+Showing all 7 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:26:1: start of procedure ast_rec()
+24.   }
+25.   
+26. > static t_ast *ast_rec(t_ast *ast, t_token *token)
+27.   {
+28.       if (!token->next && token->prev)
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:28:10: Taking false branch
+26.   static t_ast *ast_rec(t_ast *ast, t_token *token)
+27.   {
+28.       if (!token->next && token->prev)
+               ^
+29.           return set_ast_right(ast, token->type, token->value);
+30.       if (!token->next && !token->prev)
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:30:10: Taking false branch
+28.       if (!token->next && token->prev)
+29.           return set_ast_right(ast, token->type, token->value);
+30.       if (!token->next && !token->prev)
+               ^
+31.           return ast_arg(ast, token);
+32.       if (!strcmp(token->type, "ARG"))
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:32:10: Taking true branch
+30.       if (!token->next && !token->prev)
+31.           return ast_arg(ast, token);
+32.       if (!strcmp(token->type, "ARG"))
+               ^
+33.           ast = ast_arg(ast, token);
+34.       else
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:33:9: 
+31.           return ast_arg(ast, token);
+32.       if (!strcmp(token->type, "ARG"))
+33. >         ast = ast_arg(ast, token);
+34.       else
+35.           ast = ast_level(ast, token);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:36:5: 
+34.       else
+35.           ast = ast_level(ast, token);
+36. >     token = token->next;
+37.       return ast_rec(ast, token);
+38.   }
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:37:5: Skipping ast_rec(): function or method not found
+35.           ast = ast_level(ast, token);
+36.       token = token->next;
+37.       return ast_rec(ast, token);
+          ^
+38.   }
+39.   

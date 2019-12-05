@@ -1,0 +1,66 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:47: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_unsigned_to_char()` at line 48, column 13 is not reachable after line 47, column 9.
+Showing all 8 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:35:1: start of procedure print_nbr()
+33.   }
+34.   
+35. > void print_nbr(flags_t *flags, va_list ap, int *count)
+36.   {
+37.       if (flags->format == 'o')
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:37:9: Taking false branch
+35.   void print_nbr(flags_t *flags, va_list ap, int *count)
+36.   {
+37.       if (flags->format == 'o')
+              ^
+38.           display_number(flags, ap, "01234567", count);
+39.       else if (flags->format == 'x' || flags->format == 'X')
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:39:14: Taking false branch
+37.       if (flags->format == 'o')
+38.           display_number(flags, ap, "01234567", count);
+39.       else if (flags->format == 'x' || flags->format == 'X')
+                   ^
+40.           display_number(flags, ap,
+41.               (flags->format == 'x' ? "0123456789abcdef" : "0123456789ABCDEF"),
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:39:38: Taking false branch
+37.       if (flags->format == 'o')
+38.           display_number(flags, ap, "01234567", count);
+39.       else if (flags->format == 'x' || flags->format == 'X')
+                                           ^
+40.           display_number(flags, ap,
+41.               (flags->format == 'x' ? "0123456789abcdef" : "0123456789ABCDEF"),
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:43:14: Taking false branch
+41.               (flags->format == 'x' ? "0123456789abcdef" : "0123456789ABCDEF"),
+42.               count);
+43.       else if (flags->format == 'b')
+                   ^
+44.           display_number(flags, ap, "01", count);
+45.       else if (flags->format == 'u') {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:45:14: Taking true branch
+43.       else if (flags->format == 'b')
+44.           display_number(flags, ap, "01", count);
+45.       else if (flags->format == 'u') {
+                   ^
+46.           flags->precision = -1;
+47.           my_putstr_printf(
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:46:9: 
+44.           display_number(flags, ap, "01", count);
+45.       else if (flags->format == 'u') {
+46. >         flags->precision = -1;
+47.           my_putstr_printf(
+48.               my_unsigned_to_char(va_arg(ap, unsigned int)), count, flags, 1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:47:9: Skipping my_putstr_printf(): empty list of specs
+45.       else if (flags->format == 'u') {
+46.           flags->precision = -1;
+47.           my_putstr_printf(
+              ^
+48.               my_unsigned_to_char(va_arg(ap, unsigned int)), count, flags, 1);
+49.       } else if (flags->format == 'p')

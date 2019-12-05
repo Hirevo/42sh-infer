@@ -1,0 +1,86 @@
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:126: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 124, column 27 is not reachable after line 126, column 17.
+Showing all 11 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:112:1: start of procedure find_commands_matches()
+110.   }
+111.   
+112. > static vec_t *find_commands_matches(Shell *shell, char *token)
+113.   {
+114.       if (lstr_includes(token, "/"))
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:114:9: Taking false branch
+112.   static vec_t *find_commands_matches(Shell *shell, char *token)
+113.   {
+114.       if (lstr_includes(token, "/"))
+               ^
+115.           return find_path_matches(shell, token);
+116.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:117:5: 
+115.           return find_path_matches(shell, token);
+116.   
+117. >     vec_t *output = lvec_new();
+118.   
+119.       // Alias matches
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:120:5: 
+118.   
+119.       // Alias matches
+120. >     vec_t *aliases = lhmap_keys(shell->aliases);
+121.       for (size_t idx = 0; idx < lvec_size(aliases); idx++) {
+122.           char *alias = lvec_at(aliases, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:121:10: 
+119.       // Alias matches
+120.       vec_t *aliases = lhmap_keys(shell->aliases);
+121. >     for (size_t idx = 0; idx < lvec_size(aliases); idx++) {
+122.           char *alias = lvec_at(aliases, idx);
+123.           if (lstr_starts_with(alias, token)) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:121:26: Loop condition is true. Entering loop body
+119.       // Alias matches
+120.       vec_t *aliases = lhmap_keys(shell->aliases);
+121.       for (size_t idx = 0; idx < lvec_size(aliases); idx++) {
+                                ^
+122.           char *alias = lvec_at(aliases, idx);
+123.           if (lstr_starts_with(alias, token)) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:122:9: 
+120.       vec_t *aliases = lhmap_keys(shell->aliases);
+121.       for (size_t idx = 0; idx < lvec_size(aliases); idx++) {
+122. >         char *alias = lvec_at(aliases, idx);
+123.           if (lstr_starts_with(alias, token)) {
+124.               char *entry = strdup(alias);
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:123:13: Taking true branch
+121.       for (size_t idx = 0; idx < lvec_size(aliases); idx++) {
+122.           char *alias = lvec_at(aliases, idx);
+123.           if (lstr_starts_with(alias, token)) {
+                   ^
+124.               char *entry = strdup(alias);
+125.               if (entry != 0)
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:124:13: 
+122.           char *alias = lvec_at(aliases, idx);
+123.           if (lstr_starts_with(alias, token)) {
+124. >             char *entry = strdup(alias);
+125.               if (entry != 0)
+126.                   lvec_push_back(output, 1, entry);
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:125:17: Taking true branch
+123.           if (lstr_starts_with(alias, token)) {
+124.               char *entry = strdup(alias);
+125.               if (entry != 0)
+                       ^
+126.                   lvec_push_back(output, 1, entry);
+127.           }
+
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:126:17: Skipping lvec_push_back(): empty list of specs
+124.               char *entry = strdup(alias);
+125.               if (entry != 0)
+126.                   lvec_push_back(output, 1, entry);
+                       ^
+127.           }
+128.       }

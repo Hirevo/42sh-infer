@@ -1,0 +1,12 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config/config.c:46: error: DEAD_STORE
+  The value written to &alias_file (type OptionCharPtr) is never used.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config/config.c:46:5: Write of unused value
+44.           OPT_FROM_NULLABLE(CharPtr, strdup(rc_item->data)) :
+45.           NONE(CharPtr);
+46.       OPTION(CharPtr)
+          ^
+47.       alias_file = (alias_item->type == JSON_STRING) ?
+48.           OPT_FROM_NULLABLE(CharPtr, strdup(alias_item->data)) :

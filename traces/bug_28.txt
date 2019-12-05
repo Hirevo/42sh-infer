@@ -1,0 +1,48 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:24: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 20, column 18 is not reachable after line 24, column 25.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:17:1: start of procedure get_path()
+15.   #include <unistd.h>
+16.   
+17. > static char **get_path(char **ae)
+18.   {
+19.       char *tmp = get_env("PATH");
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:19:5: Skipping get_env(): empty list of specs
+17.   static char **get_path(char **ae)
+18.   {
+19.       char *tmp = get_env("PATH");
+          ^
+20.       char **ret = calloc(3, sizeof(char *));
+21.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:20:5: 
+18.   {
+19.       char *tmp = get_env("PATH");
+20. >     char **ret = calloc(3, sizeof(char *));
+21.   
+22.       (void)(ae);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:22:5: 
+20.       char **ret = calloc(3, sizeof(char *));
+21.   
+22. >     (void)(ae);
+23.       if (tmp != NULL)
+24.           return my_split(tmp, ":");
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:23:9: Taking true branch
+21.   
+22.       (void)(ae);
+23.       if (tmp != NULL)
+              ^
+24.           return my_split(tmp, ":");
+25.       if (ret == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:24:9: 
+22.       (void)(ae);
+23.       if (tmp != NULL)
+24. >         return my_split(tmp, ":");
+25.       if (ret == NULL)
+26.           return NULL;

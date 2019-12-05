@@ -1,0 +1,26 @@
+/home/runner/work/42sh-infer/42sh-infer/src/alias/alias.c:18: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 18, column 38 is not reachable after line 18, column 5.
+Showing all 3 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/alias.c:15:1: start of procedure add_alias()
+13.   #include <unistd.h>
+14.   
+15. > int add_alias(Shell *shell, char *alias, char *command)
+16.   {
+17.       free(lhmap_get(shell->aliases, alias));
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/alias.c:17:5: 
+15.   int add_alias(Shell *shell, char *alias, char *command)
+16.   {
+17. >     free(lhmap_get(shell->aliases, alias));
+18.       lhmap_set(shell->aliases, alias, strdup(command));
+19.       return 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/alias.c:18:5: Skipping lhmap_set(): empty list of specs
+16.   {
+17.       free(lhmap_get(shell->aliases, alias));
+18.       lhmap_set(shell->aliases, alias, strdup(command));
+          ^
+19.       return 0;
+20.   }

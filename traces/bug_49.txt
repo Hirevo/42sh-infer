@@ -1,0 +1,49 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:55: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 49, column 11 is not reachable after line 55, column 9.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:40:1: start of procedure send_file_http()
+38.   }
+39.   
+40. > void send_file_http(t_socket sock, char *path)
+41.   {
+42.       char *buf;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:45:9: Taking false branch
+43.       struct stat stats;
+44.   
+45.       if (stat(path, &stats) == -1) {
+              ^
+46.           write_client(sock, NF_RESP);
+47.           return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:49:5: 
+47.           return;
+48.       }
+49. >     buf = calloc(stats.st_size + 1, sizeof(char));
+50.       if (buf == NULL) {
+51.           write_client(sock, ERROR_RESP);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:50:9: Taking false branch
+48.       }
+49.       buf = calloc(stats.st_size + 1, sizeof(char));
+50.       if (buf == NULL) {
+              ^
+51.           write_client(sock, ERROR_RESP);
+52.           return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:54:9: Taking true branch
+52.           return;
+53.       }
+54.       if (read_file(path, buf, stats.st_size, sock))
+              ^
+55.           return;
+56.       write_client(sock, HEAD_RESP);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:55:9: 
+53.       }
+54.       if (read_file(path, buf, stats.st_size, sock))
+55. >         return;
+56.       write_client(sock, HEAD_RESP);
+57.       write_client(sock, "Content-length: ");

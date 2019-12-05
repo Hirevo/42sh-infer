@@ -1,0 +1,49 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:31: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `get_password()` at line 22, column 17 is not reachable after line 31, column 9.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:15:1: start of procedure launch_dc_server()
+13.   #include <stdlib.h>
+14.   
+15. > int launch_dc_server(void)
+16.   {
+17.       fd_set rdfs;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:22:9: Taking false branch
+20.       char *code;
+21.   
+22.       if ((code = get_password()) == NULL)
+              ^
+23.           return 1;
+24.       if (init_dualcast(&socket) == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:24:9: Taking false branch
+22.       if ((code = get_password()) == NULL)
+23.           return 1;
+24.       if (init_dualcast(&socket) == -1)
+              ^
+25.           return 1;
+26.       putstr("Dualcast ready !\n"
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:26:5: 
+24.       if (init_dualcast(&socket) == -1)
+25.           return 1;
+26. >     putstr("Dualcast ready !\n"
+27.              "Here is the session token: %s\n"
+28.              "Waiting for a client...\n",
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:30:9: Taking true branch
+28.              "Waiting for a client...\n",
+29.           code);
+30.       if ((client = wait_connection(socket, &rdfs, code)) == -1)
+              ^
+31.           return 1;
+32.       core_server_dc(socket, client, &rdfs);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:31:9: 
+29.           code);
+30.       if ((client = wait_connection(socket, &rdfs, code)) == -1)
+31. >         return 1;
+32.       core_server_dc(socket, client, &rdfs);
+33.       free(code);

@@ -1,0 +1,86 @@
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:53: error: NULL_DEREFERENCE
+  pointer `str` last assigned on line 46 could be null and is dereferenced at line 53, column 25.
+Showing all 11 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:39:1: start of procedure format_arg()
+37.   }
+38.   
+39. > char *format_arg(char *str)
+40.   {
+41.       int i2 = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:41:5: 
+39.   char *format_arg(char *str)
+40.   {
+41. >     int i2 = 0;
+42.       char quote = 0;
+43.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:42:5: 
+40.   {
+41.       int i2 = 0;
+42. >     char quote = 0;
+43.   
+44.       if (str[0] == '"' || str[0] == '\'') {
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:44:9: Taking true branch
+42.       char quote = 0;
+43.   
+44.       if (str[0] == '"' || str[0] == '\'') {
+              ^
+45.           quote = str[0];
+46.           str = unquote_arg(str);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:45:9: 
+43.   
+44.       if (str[0] == '"' || str[0] == '\'') {
+45. >         quote = str[0];
+46.           str = unquote_arg(str);
+47.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:46:9: 
+44.       if (str[0] == '"' || str[0] == '\'') {
+45.           quote = str[0];
+46. >         str = unquote_arg(str);
+47.       }
+48.       if (quote == '\'')
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:48:9: Taking false branch
+46.           str = unquote_arg(str);
+47.       }
+48.       if (quote == '\'')
+              ^
+49.           return str;
+50.       char *ret = calloc(count_real_chars(str) + 1, sizeof(char));
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:50:5: Skipping count_real_chars(): empty list of specs
+48.       if (quote == '\'')
+49.           return str;
+50.       char *ret = calloc(count_real_chars(str) + 1, sizeof(char));
+          ^
+51.       if (ret == NULL)
+52.           return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:51:9: Taking false branch
+49.           return str;
+50.       char *ret = calloc(count_real_chars(str) + 1, sizeof(char));
+51.       if (ret == NULL)
+              ^
+52.           return NULL;
+53.       for (size_t i1 = 0; str[i1]; i1++) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:53:10: 
+51.       if (ret == NULL)
+52.           return NULL;
+53. >     for (size_t i1 = 0; str[i1]; i1++) {
+54.           if (str[i1] == '\\') {
+55.               if (str[i1 + 1] == 0) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:53:25: Loop condition is false. Leaving loop
+51.       if (ret == NULL)
+52.           return NULL;
+53.       for (size_t i1 = 0; str[i1]; i1++) {
+                              ^
+54.           if (str[i1] == '\\') {
+55.               if (str[i1 + 1] == 0) {

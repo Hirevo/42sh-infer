@@ -1,0 +1,162 @@
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:138: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `strdup()` at line 129, column 19 is not reachable after line 138, column 13.
+Showing all 21 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:111:1: start of procedure handle_submodule()
+109.   }
+110.   
+111. > static char *handle_submodule(char *path)
+112.   {
+113.       int fd = open(path, O_RDONLY);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:113:5: 
+111.   static char *handle_submodule(char *path)
+112.   {
+113. >     int fd = open(path, O_RDONLY);
+114.   
+115.       if (fd == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:115:9: Taking false branch
+113.       int fd = open(path, O_RDONLY);
+114.   
+115.       if (fd == -1)
+               ^
+116.           return NULL;
+117.       char *tmp = read_all(fd);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:117:5: Skipping read_all(): empty list of specs
+115.       if (fd == -1)
+116.           return NULL;
+117.       char *tmp = read_all(fd);
+           ^
+118.       char *trimmed = (tmp ? lstr_trim(tmp) : 0);
+119.       free(tmp);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:118:22: Condition is true
+116.           return NULL;
+117.       char *tmp = read_all(fd);
+118.       char *trimmed = (tmp ? lstr_trim(tmp) : 0);
+                            ^
+119.       free(tmp);
+120.       close(fd);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:118:5: 
+116.           return NULL;
+117.       char *tmp = read_all(fd);
+118. >     char *trimmed = (tmp ? lstr_trim(tmp) : 0);
+119.       free(tmp);
+120.       close(fd);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:119:5: 
+117.       char *tmp = read_all(fd);
+118.       char *trimmed = (tmp ? lstr_trim(tmp) : 0);
+119. >     free(tmp);
+120.       close(fd);
+121.       if (trimmed == NULL || lstr_starts_with(trimmed, "gitdir:") == false) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:120:5: 
+118.       char *trimmed = (tmp ? lstr_trim(tmp) : 0);
+119.       free(tmp);
+120. >     close(fd);
+121.       if (trimmed == NULL || lstr_starts_with(trimmed, "gitdir:") == false) {
+122.           free(trimmed);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:121:9: Taking false branch
+119.       free(tmp);
+120.       close(fd);
+121.       if (trimmed == NULL || lstr_starts_with(trimmed, "gitdir:") == false) {
+               ^
+122.           free(trimmed);
+123.           return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:121:28: Taking false branch
+119.       free(tmp);
+120.       close(fd);
+121.       if (trimmed == NULL || lstr_starts_with(trimmed, "gitdir:") == false) {
+                                  ^
+122.           free(trimmed);
+123.           return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:125:9: 
+123.           return NULL;
+124.       } else {
+125. >         char *git_dir = trimmed + 7;
+126.           size_t count = 0;
+127.           while (is_space(git_dir[count]))
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:126:9: 
+124.       } else {
+125.           char *git_dir = trimmed + 7;
+126. >         size_t count = 0;
+127.           while (is_space(git_dir[count]))
+128.               count += 1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:127:16: Loop condition is false. Leaving loop
+125.           char *git_dir = trimmed + 7;
+126.           size_t count = 0;
+127.           while (is_space(git_dir[count]))
+                      ^
+128.               count += 1;
+129.           git_dir = strdup(git_dir + count);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:129:9: 
+127.           while (is_space(git_dir[count]))
+128.               count += 1;
+129. >         git_dir = strdup(git_dir + count);
+130.           free(trimmed);
+131.           if (git_dir == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:130:9: 
+128.               count += 1;
+129.           git_dir = strdup(git_dir + count);
+130. >         free(trimmed);
+131.           if (git_dir == NULL)
+132.               return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:131:13: Taking false branch
+129.           git_dir = strdup(git_dir + count);
+130.           free(trimmed);
+131.           if (git_dir == NULL)
+                   ^
+132.               return NULL;
+133.           char *dir = dirname(path);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:133:9: Skipping dirname(): method has no implementation
+131.           if (git_dir == NULL)
+132.               return NULL;
+133.           char *dir = dirname(path);
+               ^
+134.           if (dir == NULL)
+135.               return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:134:13: Taking false branch
+132.               return NULL;
+133.           char *dir = dirname(path);
+134.           if (dir == NULL)
+                   ^
+135.               return NULL;
+136.           dir = my_fstrcat(dir, "/", FREE_NONE);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:136:9: Skipping my_fstrcat(): empty list of specs
+134.           if (dir == NULL)
+135.               return NULL;
+136.           dir = my_fstrcat(dir, "/", FREE_NONE);
+               ^
+137.           if (dir == NULL)
+138.               return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:137:13: Taking true branch
+135.               return NULL;
+136.           dir = my_fstrcat(dir, "/", FREE_NONE);
+137.           if (dir == NULL)
+                   ^
+138.               return NULL;
+139.           git_dir = my_fstrcat(dir, git_dir, FREE_RIGHT);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:138:13: 
+136.           dir = my_fstrcat(dir, "/", FREE_NONE);
+137.           if (dir == NULL)
+138. >             return NULL;
+139.           git_dir = my_fstrcat(dir, git_dir, FREE_RIGHT);
+140.           if (git_dir == NULL)

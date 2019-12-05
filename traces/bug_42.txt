@@ -1,0 +1,12 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/types.c:36: error: DEAD_STORE
+  The value written to &tabidx (type int) is never used.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/types.c:36:5: Write of unused value
+34.       json_type_tuple_t tab[4] = {{"{", JSON_OBJECT}, {"[", JSON_ARRAY},
+35.           {"-0123456789.", JSON_NUMBER}, {"\"'", JSON_STRING}};
+36.       int tabidx = -1;
+          ^
+37.       int cidx = -1;
+38.       int len;

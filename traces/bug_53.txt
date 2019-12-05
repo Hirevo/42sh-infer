@@ -1,0 +1,93 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:56: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `malloc()` at line 51, column 18 is not reachable after line 56, column 13.
+Showing all 12 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:43:1: start of procedure my_strarrdup()
+41.   }
+42.   
+43. > char **my_strarrdup(char **arr)
+44.   {
+45.       char **final;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:48:5: 
+46.       int i;
+47.   
+48. >     i = -1;
+49.       while (arr[++i])
+50.           ;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:49:16: 
+47.   
+48.       i = -1;
+49. >     while (arr[++i])
+50.           ;
+51.       if ((final = malloc(sizeof(char *) * (i + 1))) == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:49:12: Loop condition is true. Entering loop body
+47.   
+48.       i = -1;
+49.       while (arr[++i])
+                 ^
+50.           ;
+51.       if ((final = malloc(sizeof(char *) * (i + 1))) == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:49:16: 
+47.   
+48.       i = -1;
+49. >     while (arr[++i])
+50.           ;
+51.       if ((final = malloc(sizeof(char *) * (i + 1))) == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:49:12: Loop condition is false. Leaving loop
+47.   
+48.       i = -1;
+49.       while (arr[++i])
+                 ^
+50.           ;
+51.       if ((final = malloc(sizeof(char *) * (i + 1))) == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:51:9: Taking false branch
+49.       while (arr[++i])
+50.           ;
+51.       if ((final = malloc(sizeof(char *) * (i + 1))) == NULL)
+              ^
+52.           return (NULL);
+53.       i = -1;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:53:5: 
+51.       if ((final = malloc(sizeof(char *) * (i + 1))) == NULL)
+52.           return (NULL);
+53. >     i = -1;
+54.       while (arr[++i])
+55.           if ((final[i] = my_strdup(arr[i])) == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:54:16: 
+52.           return (NULL);
+53.       i = -1;
+54. >     while (arr[++i])
+55.           if ((final[i] = my_strdup(arr[i])) == NULL)
+56.               return (NULL);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:54:12: Loop condition is true. Entering loop body
+52.           return (NULL);
+53.       i = -1;
+54.       while (arr[++i])
+                 ^
+55.           if ((final[i] = my_strdup(arr[i])) == NULL)
+56.               return (NULL);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:55:13: Taking true branch
+53.       i = -1;
+54.       while (arr[++i])
+55.           if ((final[i] = my_strdup(arr[i])) == NULL)
+                  ^
+56.               return (NULL);
+57.       final[i] = NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:56:13: 
+54.       while (arr[++i])
+55.           if ((final[i] = my_strdup(arr[i])) == NULL)
+56. >             return (NULL);
+57.       final[i] = NULL;
+58.       return (final);

@@ -1,0 +1,12 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/convert_base.c:86: error: DEAD_STORE
+  The value written to &factor (type int) is never used.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/convert_base.c:86:9: Write of unused value
+84.       if (nbr[0] == '-') {
+85.           isNegative = (-1);
+86.           factor = factor / base1;
+              ^
+87.       }
+88.       return (my_algorithm(total, base_to, base2, isNegative));

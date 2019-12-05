@@ -1,0 +1,88 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:29: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_with_capacity()` at line 25, column 11 is not reachable after line 29, column 15.
+Showing all 11 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:15:1: start of procedure lstr_split()
+13.    * **Does not modify the original string.**
+14.    **/
+15. > vec_t *lstr_split(const char *this, const char *sep)
+16.   {
+17.       vec_t *ret;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:20:9: Taking false branch
+18.       ssize_t size;
+19.   
+20.       if (this == NULL || sep == NULL)
+              ^
+21.           return (NULL);
+22.       size = lstr_nb_occur(this, sep);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:20:25: Taking false branch
+18.       ssize_t size;
+19.   
+20.       if (this == NULL || sep == NULL)
+                              ^
+21.           return (NULL);
+22.       size = lstr_nb_occur(this, sep);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:22:5: 
+20.       if (this == NULL || sep == NULL)
+21.           return (NULL);
+22. >     size = lstr_nb_occur(this, sep);
+23.       if (size == 0 || size == -1)
+24.           return (0);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:23:9: Taking false branch
+21.           return (NULL);
+22.       size = lstr_nb_occur(this, sep);
+23.       if (size == 0 || size == -1)
+              ^
+24.           return (0);
+25.       ret = lvec_with_capacity(size);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:23:22: Taking false branch
+21.           return (NULL);
+22.       size = lstr_nb_occur(this, sep);
+23.       if (size == 0 || size == -1)
+                           ^
+24.           return (0);
+25.       ret = lvec_with_capacity(size);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:25:5: 
+23.       if (size == 0 || size == -1)
+24.           return (0);
+25. >     ret = lvec_with_capacity(size);
+26.       if (ret == 0)
+27.           return (0);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:26:9: Taking false branch
+24.           return (0);
+25.       ret = lvec_with_capacity(size);
+26.       if (ret == 0)
+              ^
+27.           return (0);
+28.       for (size_t idx = 0; this[idx]; idx++) {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:28:10: 
+26.       if (ret == 0)
+27.           return (0);
+28. >     for (size_t idx = 0; this[idx]; idx++) {
+29.           ret = intern_lstr_split_helper(this, sep, ret, &idx);
+30.           if (ret == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:28:26: Loop condition is true. Entering loop body
+26.       if (ret == 0)
+27.           return (0);
+28.       for (size_t idx = 0; this[idx]; idx++) {
+                               ^
+29.           ret = intern_lstr_split_helper(this, sep, ret, &idx);
+30.           if (ret == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:29:9: Skipping intern_lstr_split_helper(): empty list of specs
+27.           return (0);
+28.       for (size_t idx = 0; this[idx]; idx++) {
+29.           ret = intern_lstr_split_helper(this, sep, ret, &idx);
+              ^
+30.           if (ret == 0)
+31.               return (0);

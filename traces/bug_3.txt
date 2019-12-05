@@ -1,0 +1,56 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:21: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `malloc()` at line 16, column 12 is not reachable after line 21, column 9.
+Showing all 7 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:10:1: start of procedure ljson_parse()
+8.   #include "intern_json.h"
+9.   
+10. > json_t *ljson_parse(char *text)
+11.   {
+12.       json_t *json;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:14:9: Taking false branch
+12.       json_t *json;
+13.   
+14.       if (text == NULL)
+              ^
+15.           return (NULL);
+16.       json = malloc(sizeof(json_t));
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:16:5: 
+14.       if (text == NULL)
+15.           return (NULL);
+16. >     json = malloc(sizeof(json_t));
+17.       if (json == NULL)
+18.           return (NULL);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:17:9: Taking false branch
+15.           return (NULL);
+16.       json = malloc(sizeof(json_t));
+17.       if (json == NULL)
+              ^
+18.           return (NULL);
+19.       json->raw = strdup(text);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:19:5: 
+17.       if (json == NULL)
+18.           return (NULL);
+19. >     json->raw = strdup(text);
+20.       if (json->raw == NULL)
+21.           return (NULL);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:20:9: Taking true branch
+18.           return (NULL);
+19.       json->raw = strdup(text);
+20.       if (json->raw == NULL)
+              ^
+21.           return (NULL);
+22.       json->original = strdup(text);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:21:9: 
+19.       json->raw = strdup(text);
+20.       if (json->raw == NULL)
+21. >         return (NULL);
+22.       json->original = strdup(text);
+23.       json->raw = ljson_normalize(json->raw);

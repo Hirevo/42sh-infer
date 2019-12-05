@@ -1,0 +1,48 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:41: error: NULL_DEREFERENCE
+  pointer `*prompt` last assigned on line 40 could be null and is dereferenced by call to `strlen()` at line 41, column 20.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:35:1: start of procedure prompt_serv()
+33.   }
+34.   
+35. > void prompt_serv(t_socket sock, char c, char **prompt, int *nb_char)
+36.   {
+37.       if (c == 13) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:37:9: Taking true branch
+35.   void prompt_serv(t_socket sock, char c, char **prompt, int *nb_char)
+36.   {
+37.       if (c == 13) {
+              ^
+38.           write_client(sock, "OK");
+39.           exc_cmd(sock, prompt, nb_char);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:38:9: 
+36.   {
+37.       if (c == 13) {
+38. >         write_client(sock, "OK");
+39.           exc_cmd(sock, prompt, nb_char);
+40.           *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:39:9: Skipping exc_cmd(): empty list of specs
+37.       if (c == 13) {
+38.           write_client(sock, "OK");
+39.           exc_cmd(sock, prompt, nb_char);
+              ^
+40.           *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+41.           *nb_char = strlen(*prompt);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:40:9: 
+38.           write_client(sock, "OK");
+39.           exc_cmd(sock, prompt, nb_char);
+40. >         *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+41.           *nb_char = strlen(*prompt);
+42.           putstr("\n%s", *prompt);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:41:9: 
+39.           exc_cmd(sock, prompt, nb_char);
+40.           *prompt = strdup("(\e[32;1mDualCast\e[0m) $> ");
+41. >         *nb_char = strlen(*prompt);
+42.           putstr("\n%s", *prompt);
+43.           fflush(stdout);

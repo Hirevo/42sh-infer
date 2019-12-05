@@ -1,0 +1,63 @@
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:68: error: NULL_DEREFERENCE
+  pointer `new->type` last assigned on line 59 could be null and is dereferenced by call to `set_ast_level()` at line 68, column 12.
+Showing all 8 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:53:1: start of procedure ast_level()
+51.   }
+52.   
+53. > t_ast *ast_level(t_ast *ast, t_token *token)
+54.   {
+55.       t_ast *new = calloc(1, sizeof(t_ast));
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:55:5: 
+53.   t_ast *ast_level(t_ast *ast, t_token *token)
+54.   {
+55. >     t_ast *new = calloc(1, sizeof(t_ast));
+56.   
+57.       if (new == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:57:9: Taking false branch
+55.       t_ast *new = calloc(1, sizeof(t_ast));
+56.   
+57.       if (new == 0)
+              ^
+58.           return NULL;
+59.       set_ast(new, token);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:59:5: 
+57.       if (new == 0)
+58.           return NULL;
+59. >     set_ast(new, token);
+60.       if (!ast) {
+61.           return new;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:60:10: Taking false branch
+58.           return NULL;
+59.       set_ast(new, token);
+60.       if (!ast) {
+               ^
+61.           return new;
+62.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:63:10: Taking true branch
+61.           return new;
+62.       }
+63.       if (!strcmp(ast->type, "ARG") && !ast->father) {
+               ^
+64.           ast->father = new;
+65.           new->left = ast;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:63:39: Taking false branch
+61.           return new;
+62.       }
+63.       if (!strcmp(ast->type, "ARG") && !ast->father) {
+                                            ^
+64.           ast->father = new;
+65.           new->left = ast;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:68:5: 
+66.           return set_ast(new, token);
+67.       }
+68. >     return set_ast_level(ast, new);
+69.   }

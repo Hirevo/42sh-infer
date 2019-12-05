@@ -1,0 +1,195 @@
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:179: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 177, column 16 is not reachable after line 179, column 13.
+Showing all 26 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:169:1: start of procedure parse_commands()
+167.   }
+168.   
+169. > OPTION(CommandPtr) parse_commands(vec_t *fragments)
+170.   {
+171.       Command *elem = NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:171:5: 
+169.   OPTION(CommandPtr) parse_commands(vec_t *fragments)
+170.   {
+171. >     Command *elem = NULL;
+172.       Command *head = NULL;
+173.       Command *commands = NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:172:5: 
+170.   {
+171.       Command *elem = NULL;
+172. >     Command *head = NULL;
+173.       Command *commands = NULL;
+174.       size_t last = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:173:5: 
+171.       Command *elem = NULL;
+172.       Command *head = NULL;
+173. >     Command *commands = NULL;
+174.       size_t last = 0;
+175.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:174:5: 
+172.       Command *head = NULL;
+173.       Command *commands = NULL;
+174. >     size_t last = 0;
+175.   
+176.       for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:176:10: 
+174.       size_t last = 0;
+175.   
+176. >     for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+177.           elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:176:26: Loop condition is true. Entering loop body
+174.       size_t last = 0;
+175.   
+176.       for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+                                ^
+177.           elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:177:9: 
+175.   
+176.       for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+177. >         elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+179.               return NONE(CommandPtr);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:178:13: Taking false branch
+176.       for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+177.           elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+                   ^
+179.               return NONE(CommandPtr);
+180.           elem->av = lvec_new();
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:180:9: 
+178.           if (elem == NULL)
+179.               return NONE(CommandPtr);
+180. >         elem->av = lvec_new();
+181.           elem->redirects = lvec_new();
+182.           elem->next = NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:181:9: 
+179.               return NONE(CommandPtr);
+180.           elem->av = lvec_new();
+181. >         elem->redirects = lvec_new();
+182.           elem->next = NULL;
+183.           (head) ? (head->next = elem) : (commands = elem);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:182:9: 
+180.           elem->av = lvec_new();
+181.           elem->redirects = lvec_new();
+182. >         elem->next = NULL;
+183.           (head) ? (head->next = elem) : (commands = elem);
+184.           elem->prev = head;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:183:9: Condition is false
+181.           elem->redirects = lvec_new();
+182.           elem->next = NULL;
+183.           (head) ? (head->next = elem) : (commands = elem);
+               ^
+184.           elem->prev = head;
+185.           last = idx;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:184:9: 
+182.           elem->next = NULL;
+183.           (head) ? (head->next = elem) : (commands = elem);
+184. >         elem->prev = head;
+185.           last = idx;
+186.           idx += count_link(fragments, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:185:9: 
+183.           (head) ? (head->next = elem) : (commands = elem);
+184.           elem->prev = head;
+185. >         last = idx;
+186.           idx += count_link(fragments, idx);
+187.           if (idx == last) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:186:9: Skipping count_link(): empty list of specs
+184.           elem->prev = head;
+185.           last = idx;
+186.           idx += count_link(fragments, idx);
+               ^
+187.           if (idx == last) {
+188.               eputstr("invalid null command.\n");
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:187:13: Taking false branch
+185.           last = idx;
+186.           idx += count_link(fragments, idx);
+187.           if (idx == last) {
+                   ^
+188.               eputstr("invalid null command.\n");
+189.               return NONE(CommandPtr);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:191:9: Skipping prepare_link(): empty list of specs
+189.               return NONE(CommandPtr);
+190.           }
+191.           prepare_link(fragments, elem, idx, last);
+               ^
+192.           idx -= (elem->link == '0');
+193.           head = elem;
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:192:17: Condition is false
+190.           }
+191.           prepare_link(fragments, elem, idx, last);
+192.           idx -= (elem->link == '0');
+                       ^
+193.           head = elem;
+194.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:192:9: 
+190.           }
+191.           prepare_link(fragments, elem, idx, last);
+192. >         idx -= (elem->link == '0');
+193.           head = elem;
+194.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:193:9: 
+191.           prepare_link(fragments, elem, idx, last);
+192.           idx -= (elem->link == '0');
+193. >         head = elem;
+194.       }
+195.       return SOME(CommandPtr, commands);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:176:54: 
+174.       size_t last = 0;
+175.   
+176. >     for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+177.           elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:176:26: Loop condition is true. Entering loop body
+174.       size_t last = 0;
+175.   
+176.       for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+                                ^
+177.           elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:177:9: 
+175.   
+176.       for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+177. >         elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+179.               return NONE(CommandPtr);
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:178:13: Taking true branch
+176.       for (size_t idx = 0; idx < lvec_size(fragments); idx++) {
+177.           elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+                   ^
+179.               return NONE(CommandPtr);
+180.           elem->av = lvec_new();
+
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:179:13: 
+177.           elem = calloc(1, sizeof(*elem));
+178.           if (elem == NULL)
+179. >             return NONE(CommandPtr);
+180.           elem->av = lvec_new();
+181.           elem->redirects = lvec_new();

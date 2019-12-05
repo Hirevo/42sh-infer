@@ -1,0 +1,64 @@
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:167: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 156, column 18 is not reachable after line 167, column 17.
+Showing all 8 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:153:1: start of procedure show_cur_branch()
+151.   }
+152.   
+153. > char *show_cur_branch(void)
+154.   {
+155.       char *result = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:155:5: 
+153.   char *show_cur_branch(void)
+154.   {
+155. >     char *result = 0;
+156.       char *path = strdup("./.git");
+157.       struct stat stats = {0};
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:156:5: 
+154.   {
+155.       char *result = 0;
+156. >     char *path = strdup("./.git");
+157.       struct stat stats = {0};
+158.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:157:5: 
+155.       char *result = 0;
+156.       char *path = strdup("./.git");
+157. >     struct stat stats = {0};
+158.   
+159.       while (path != NULL) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:159:12: Loop condition is true. Entering loop body
+157.       struct stat stats = {0};
+158.   
+159.       while (path != NULL) {
+                  ^
+160.           if (stat(path, &stats) == -1 ||
+161.               (S_ISREG(stats.st_mode) && !(result = handle_submodule(path))) ||
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:160:13: Taking true branch
+158.   
+159.       while (path != NULL) {
+160.           if (stat(path, &stats) == -1 ||
+                   ^
+161.               (S_ISREG(stats.st_mode) && !(result = handle_submodule(path))) ||
+162.               (S_ISDIR(stats.st_mode) && !(result = handle_standard(path)))) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:163:17: Taking false branch
+161.               (S_ISREG(stats.st_mode) && !(result = handle_submodule(path))) ||
+162.               (S_ISDIR(stats.st_mode) && !(result = handle_standard(path)))) {
+163.               if (is_root(path)) {
+                       ^
+164.                   free(path);
+165.                   return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:167:17: Skipping my_fstrcat(): empty list of specs
+165.                   return NULL;
+166.               } else
+167.                   path = my_fstrcat("../", path, FREE_RIGHT);
+                       ^
+168.           } else {
+169.               return result;

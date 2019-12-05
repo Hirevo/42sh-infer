@@ -1,0 +1,49 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:26: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 19, column 17 is not reachable after line 26, column 9.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:17:1: start of procedure read_code()
+15.   #include <sys/select.h>
+16.   
+17. > static char *read_code(t_socket client)
+18.   {
+19.       char *ret = calloc(5, sizeof(char));
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:19:5: 
+17.   static char *read_code(t_socket client)
+18.   {
+19. >     char *ret = calloc(5, sizeof(char));
+20.       int len;
+21.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:22:9: Taking false branch
+20.       int len;
+21.   
+22.       if (ret == NULL)
+              ^
+23.           return NULL;
+24.       len = recv(client, ret, 4, 0);
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:24:5: Skipping recv(): method has no implementation
+22.       if (ret == NULL)
+23.           return NULL;
+24.       len = recv(client, ret, 4, 0);
+          ^
+25.       if (len < 0)
+26.           return NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:25:9: Taking true branch
+23.           return NULL;
+24.       len = recv(client, ret, 4, 0);
+25.       if (len < 0)
+              ^
+26.           return NULL;
+27.       ret[len] = '\0';
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:26:9: 
+24.       len = recv(client, ret, 4, 0);
+25.       if (len < 0)
+26. >         return NULL;
+27.       ret[len] = '\0';
+28.       return ret;

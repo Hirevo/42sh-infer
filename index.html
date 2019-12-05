@@ -1,0 +1,437 @@
+<html>
+<head>
+<title>Infer found 107 bugs</title>
+</head>
+<body>
+<h2>List of bugs found</h2>
+<ol><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c:20: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 20, column 57 is not reachable after line 20, column 22.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/hmap/src/lhmap_set.c#L20">source</a> | <a href="traces/bug_1.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/clear.c:18: error: DEAD_STORE
+  The value written to &idx (type int) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/clear.c#L18">source</a> | <a href="traces/bug_2.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c:21: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `malloc()` at line 16, column 12 is not reachable after line 21, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/json.c#L21">source</a> | <a href="traces/bug_3.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c:23: error: MEMORY_LEAK
+  memory dynamically allocated by call to `ljson_item_new()` at line 23, column 43 is not reachable after line 23, column 22.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/base.c#L23">source</a> | <a href="traces/bug_4.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:27: error: MEMORY_LEAK
+  memory dynamically allocated by call to `ljson_item_new()` at line 27, column 46 is not reachable after line 27, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c#L27">source</a> | <a href="traces/bug_5.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:27: error: UNINITIALIZED_VALUE
+  The value read from type was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c#L27">source</a> | <a href="traces/bug_6.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:22: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 14, column 19 is not reachable after line 22, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c#L22">source</a> | <a href="traces/bug_7.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:22: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 18, column 19 is not reachable after line 22, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c#L22">source</a> | <a href="traces/bug_8.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c:16: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_reserve()` at line 14, column 5 is not reachable after line 16, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/vec/src/lvec_concat.c#L16">source</a> | <a href="traces/bug_9.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c:17: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 16, column 15 is not reachable after line 17, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c#L17">source</a> | <a href="traces/bug_10.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:23: error: MEMORY_LEAK
+  memory dynamically allocated by call to `int_toc()` at line 23, column 27 is not reachable after line 23, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c#L23">source</a> | <a href="traces/bug_11.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c:25: error: MEMORY_LEAK
+  memory dynamically allocated by call to `int_toc()` at line 25, column 27 is not reachable after line 25, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_info.c#L25">source</a> | <a href="traces/bug_12.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c:18: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 16, column 11 is not reachable after line 18, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c#L18">source</a> | <a href="traces/bug_13.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c:21: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 16, column 11 is not reachable after line 21, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_client.c#L21">source</a> | <a href="traces/bug_14.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c:18: error: NULL_DEREFERENCE
+  pointer `*prompt` last assigned on line 17 could be null and is dereferenced by call to `strlen()` at line 18, column 16.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast/response_serv.c#L18">source</a> | <a href="traces/bug_15.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:22: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_split()` at line 16, column 20 is not reachable after line 22, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c#L22">source</a> | <a href="traces/bug_16.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:28: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_split()` at line 16, column 20 is not reachable after line 28, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c#L28">source</a> | <a href="traces/bug_17.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:29: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_with_capacity()` at line 25, column 11 is not reachable after line 29, column 15.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c#L29">source</a> | <a href="traces/bug_18.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c:29: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_with_capacity()` at line 25, column 11 is not reachable after line 29, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_split.c#L29">source</a> | <a href="traces/bug_19.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/alias/alias.c:18: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 18, column 38 is not reachable after line 18, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/alias/alias.c#L18">source</a> | <a href="traces/bug_20.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config/config.c:46: error: DEAD_STORE
+  The value written to &alias_file (type OptionCharPtr) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config/config.c#L46">source</a> | <a href="traces/bug_21.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config/config.c:50: error: DEAD_STORE
+  The value written to &history_file (type OptionCharPtr) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config/config.c#L50">source</a> | <a href="traces/bug_22.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config/config.c:42: error: DEAD_STORE
+  The value written to &rc_file (type OptionCharPtr) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config/config.c#L42">source</a> | <a href="traces/bug_23.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:25: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `get_password()` at line 22, column 17 is not reachable after line 25, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast.c#L25">source</a> | <a href="traces/bug_24.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:31: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `get_password()` at line 22, column 17 is not reachable after line 31, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast.c#L31">source</a> | <a href="traces/bug_25.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:38: error: RESOURCE_LEAK
+  resource acquired to `socket` by call to `init_dualcast()` at line 24, column 9 is not released after line 38, column 1.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast.c#L38">source</a> | <a href="traces/bug_26.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:31: error: DEAD_STORE
+  The value written to &i (type unsigned long) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c#L31">source</a> | <a href="traces/bug_27.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:24: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 20, column 18 is not reachable after line 24, column 25.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c#L24">source</a> | <a href="traces/bug_28.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c:26: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 19, column 17 is not reachable after line 26, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast/wait_connection.c#L26">source</a> | <a href="traces/bug_29.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt.c:23: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 23, column 12 is not reachable after line 23, column 12.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt.c#L23">source</a> | <a href="traces/bug_30.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:38: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 37, column 25 is not reachable after line 38, column 17.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c#L38">source</a> | <a href="traces/bug_31.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:38: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 37, column 25 is not reachable after line 38, column 41.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c#L38">source</a> | <a href="traces/bug_32.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c:42: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 37, column 25 is not reachable after line 42, column 17.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/set.c#L42">source</a> | <a href="traces/bug_33.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c:34: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 32, column 15 is not reachable after line 34, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/str/src/lstr_replace.c#L34">source</a> | <a href="traces/bug_34.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/str/src/internal_lstr_split_helpers.c:33: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 27, column 24 is not reachable after line 33, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/str/src/internal_lstr_split_helpers.c#L33">source</a> | <a href="traces/bug_35.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/int_toc.c:34: error: DEAD_STORE
+  The value written to &nb (type int) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/int_toc.c#L34">source</a> | <a href="traces/bug_36.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:28: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lhmap_with_capacity()` at line 27, column 23 is not reachable after line 28, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/init.c#L28">source</a> | <a href="traces/bug_37.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c:37: error: MEMORY_LEAK
+  memory dynamically allocated by call to `ast_level()` at line 35, column 15 is not reachable after line 37, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast.c#L37">source</a> | <a href="traces/bug_38.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:44: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 28, column 20 is not reachable after line 44, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c#L44">source</a> | <a href="traces/bug_39.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:43: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 36, column 15 is not reachable after line 43, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c#L43">source</a> | <a href="traces/bug_40.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/types.c:37: error: DEAD_STORE
+  The value written to &cidx (type int) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/types.c#L37">source</a> | <a href="traces/bug_41.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/types.c:36: error: DEAD_STORE
+  The value written to &tabidx (type int) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/types.c#L36">source</a> | <a href="traces/bug_42.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c:36: error: DEAD_STORE
+  The value written to &ret (type int) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/which.c#L36">source</a> | <a href="traces/bug_43.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:53: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_long_to_char()` at line 53, column 26 is not reachable after line 53, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c#L53">source</a> | <a href="traces/bug_44.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c:47: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_unsigned_to_char()` at line 48, column 13 is not reachable after line 47, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_printf.c#L47">source</a> | <a href="traces/bug_45.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c:41: error: NULL_DEREFERENCE
+  pointer `*prompt` last assigned on line 40 could be null and is dereferenced by call to `strlen()` at line 41, column 20.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast/prompt_serv.c#L41">source</a> | <a href="traces/bug_46.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/home.c:44: error: MEMORY_LEAK
+  memory dynamically allocated by call to `getcwd()` at line 39, column 18 is not reachable after line 44, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/home.c#L44">source</a> | <a href="traces/bug_47.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:53: error: NULL_DEREFERENCE
+  pointer `str` last assigned on line 46 could be null and is dereferenced at line 53, column 25.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L53">source</a> | <a href="traces/bug_48.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c:55: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 49, column 11 is not reachable after line 55, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_file_http.c#L55">source</a> | <a href="traces/bug_49.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:52: error: RESOURCE_LEAK
+  resource acquired to `client.sock` by call to `init_connect_dc()` at line 44, column 9 is not released after line 52, column 1.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast.c#L52">source</a> | <a href="traces/bug_50.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/char.c:43: error: DEAD_STORE
+  The value written to &c (type int) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/char.c#L43">source</a> | <a href="traces/bug_51.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:54: error: RESOURCE_LEAK
+  resource acquired by call to `open()` at line 50, column 14 is not released after line 54, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c#L54">source</a> | <a href="traces/bug_52.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c:56: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `malloc()` at line 51, column 18 is not reachable after line 56, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_strdup.c#L56">source</a> | <a href="traces/bug_53.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:65: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 63, column 16 is not reachable after line 65, column 27.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/my_sh.c#L65">source</a> | <a href="traces/bug_54.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:57: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 51, column 18 is not reachable after line 57, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c#L57">source</a> | <a href="traces/bug_55.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c:64: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 51, column 18 is not reachable after line 64, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/send_env.c#L64">source</a> | <a href="traces/bug_56.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:52: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lhmap_with_capacity()` at line 51, column 19 is not reachable after line 52, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/init.c#L52">source</a> | <a href="traces/bug_57.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/history.c:64: error: RESOURCE_LEAK
+  resource acquired by call to `open()` at line 60, column 14 is not released after line 64, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/history.c#L64">source</a> | <a href="traces/bug_58.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:66: error: MEMORY_LEAK
+  memory dynamically allocated by call to `set_ast()` at line 59, column 5 is not reachable after line 66, column 16.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c#L66">source</a> | <a href="traces/bug_59.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c:68: error: NULL_DEREFERENCE
+  pointer `new->type` last assigned on line 59 could be null and is dereferenced by call to `set_ast_level()` at line 68, column 12.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parser_ll/ast_lvl.c#L68">source</a> | <a href="traces/bug_60.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_put_nbr.c:80: error: UNINITIALIZED_VALUE
+  The value read from isNegative was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_put_nbr.c#L80">source</a> | <a href="traces/bug_61.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_put_nbr.c:80: error: UNINITIALIZED_VALUE
+  The value read from isNegative was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_put_nbr.c#L80">source</a> | <a href="traces/bug_62.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:68: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_with_capacity()` at line 64, column 23 is not reachable after line 68, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c#L68">source</a> | <a href="traces/bug_63.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:163: error: UNINITIALIZED_VALUE
+  The value read from fds[_] was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c#L163">source</a> | <a href="traces/bug_64.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:164: error: UNINITIALIZED_VALUE
+  The value read from fds[_] was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c#L164">source</a> | <a href="traces/bug_65.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:190: error: UNINITIALIZED_VALUE
+  The value read from fds[_] was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c#L190">source</a> | <a href="traces/bug_66.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:201: error: UNINITIALIZED_VALUE
+  The value read from fds[_] was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c#L201">source</a> | <a href="traces/bug_67.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:205: error: UNINITIALIZED_VALUE
+  The value read from fds[_] was never initialized.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c#L205">source</a> | <a href="traces/bug_68.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:75: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 64, column 24 is not reachable after line 75, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c#L75">source</a> | <a href="traces/bug_69.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c:85: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 65, column 20 is not reachable after line 85, column 1.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/dualcast/core_server.c#L85">source</a> | <a href="traces/bug_70.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/convert_base.c:86: error: DEAD_STORE
+  The value written to &factor (type int) is never used.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/convert_base.c#L86">source</a> | <a href="traces/bug_71.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:83: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 74, column 15 is not reachable after line 83, column 29.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c#L83">source</a> | <a href="traces/bug_72.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c:85: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 74, column 15 is not reachable after line 85, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/exec_cmd_http.c#L85">source</a> | <a href="traces/bug_73.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:81: error: USE_AFTER_FREE
+  pointer `file` last assigned on line 74 was freed by call to `get_file_http()` at line 74, column 17 and is dereferenced or freed at line 81, column 17.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c#L81">source</a> | <a href="traces/bug_74.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c:87: error: USE_AFTER_FREE
+  pointer `file` last assigned on line 74 was freed by call to `get_file_http()` at line 74, column 17 and is dereferenced or freed at line 87, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/response.c#L87">source</a> | <a href="traces/bug_75.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_char.c:85: error: NULL_DEREFERENCE
+  pointer `*ret[i]` last assigned on line 84 could be null and is dereferenced at line 85, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_char.c#L85">source</a> | <a href="traces/bug_76.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:80: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 80, column 22 is not reachable after line 80, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c#L80">source</a> | <a href="traces/bug_77.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:86: error: RESOURCE_LEAK
+  resource acquired to `serv` by call to `init_connection()` at line 77, column 17 is not released after line 86, column 1.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c#L86">source</a> | <a href="traces/bug_78.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:76: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_int_to_char()` at line 77, column 9 is not reachable after line 76, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c#L76">source</a> | <a href="traces/bug_79.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:81: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 78, column 18 is not reachable after line 81, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c#L81">source</a> | <a href="traces/bug_80.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c:88: error: NULL_DEREFERENCE
+  pointer `*ret[i]` last assigned on line 87 could be null and is dereferenced at line 88, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split.c#L88">source</a> | <a href="traces/bug_81.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c:90: error: NULL_DEREFERENCE
+  pointer `*ret[i]` last assigned on line 89 could be null and is dereferenced at line 90, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/my_split_mulchar.c#L90">source</a> | <a href="traces/bug_82.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:101: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lhmap_with_capacity()` at line 100, column 28 is not reachable after line 101, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/init.c#L101">source</a> | <a href="traces/bug_83.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:89: error: NULL_DEREFERENCE
+  pointer `arg` last assigned on line 88 could be null and is dereferenced at line 89, column 28.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c#L89">source</a> | <a href="traces/bug_84.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c:91: error: MEMORY_LEAK
+  memory dynamically allocated by call to `int_toc()` at line 91, column 35 is not reachable after line 91, column 5.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/navigator.c#L91">source</a> | <a href="traces/bug_85.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:100: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_int_to_char()` at line 97, column 16 is not reachable after line 100, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c#L100">source</a> | <a href="traces/bug_86.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:109: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 109, column 31 is not reachable after line 109, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/my_sh.c#L109">source</a> | <a href="traces/bug_87.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:116: error: RESOURCE_LEAK
+  resource acquired by call to `open()` at line 113, column 18 is not released after line 116, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/my_sh.c#L116">source</a> | <a href="traces/bug_88.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:112: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 107, column 22 is not reachable after line 112, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c#L112">source</a> | <a href="traces/bug_89.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:114: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 107, column 22 is not reachable after line 114, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c#L114">source</a> | <a href="traces/bug_90.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c:116: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `calloc()` at line 107, column 22 is not reachable after line 116, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/get_info_pc.c#L116">source</a> | <a href="traces/bug_91.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:139: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 129, column 19 is not reachable after line 139, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c#L139">source</a> | <a href="traces/bug_92.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:135: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `strdup()` at line 129, column 19 is not reachable after line 135, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c#L135">source</a> | <a href="traces/bug_93.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:138: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `strdup()` at line 129, column 19 is not reachable after line 138, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c#L138">source</a> | <a href="traces/bug_94.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:126: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 124, column 27 is not reachable after line 126, column 17.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c#L126">source</a> | <a href="traces/bug_95.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:128: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_with_capacity()` at line 115, column 24 is not reachable after line 128, column 17.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L128">source</a> | <a href="traces/bug_96.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:132: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_with_capacity()` at line 115, column 24 is not reachable after line 132, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L132">source</a> | <a href="traces/bug_97.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:125: error: MEMORY_LEAK
+  memory dynamically allocated to `return` by call to `lvec_with_capacity()` at line 115, column 24 is not reachable after line 125, column 17.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L125">source</a> | <a href="traces/bug_98.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:162: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 156, column 18 is not reachable after line 162, column 14.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c#L162">source</a> | <a href="traces/bug_99.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c:167: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 156, column 18 is not reachable after line 167, column 17.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/prompt/get_cur_branch.c#L167">source</a> | <a href="traces/bug_100.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:179: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 177, column 16 is not reachable after line 179, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L179">source</a> | <a href="traces/bug_101.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:188: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 177, column 16 is not reachable after line 188, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L188">source</a> | <a href="traces/bug_102.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:191: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_new()` at line 180, column 20 is not reachable after line 191, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L191">source</a> | <a href="traces/bug_103.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c:191: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lvec_new()` at line 181, column 27 is not reachable after line 191, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/parse/bufferize.c#L191">source</a> | <a href="traces/bug_104.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:242: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 240, column 15 is not reachable after line 242, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c#L242">source</a> | <a href="traces/bug_105.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:244: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 240, column 15 is not reachable after line 244, column 13.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c#L244">source</a> | <a href="traces/bug_106.txt">trace</a>)
+</li><li>
+/home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c:275: error: NULL_DEREFERENCE
+  pointer `prefix` last assigned on line 274 could be null and is dereferenced by call to `strlen()` at line 275, column 9.
+(<a href="https://github.com/Hirevo/42sh-infer/blob/fa8591749a0fc3cb0bee626a2c46be2424848418/build//home/runner/work/42sh-infer/42sh-infer/src/autocompletion.c#L275">source</a> | <a href="traces/bug_107.txt">trace</a>)
+</li></ol>
+</body>
+</html>

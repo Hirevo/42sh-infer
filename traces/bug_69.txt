@@ -1,0 +1,142 @@
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:75: error: MEMORY_LEAK
+  memory dynamically allocated by call to `calloc()` at line 64, column 24 is not reachable after line 75, column 9.
+Showing all 19 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:59:1: start of procedure set_alias()
+57.   }
+58.   
+59. > void set_alias(Shell *shell, char *path)
+60.   {
+61.       size_t obj = strcspn(path + 6, "=");
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:61:5: 
+59.   void set_alias(Shell *shell, char *path)
+60.   {
+61. >     size_t obj = strcspn(path + 6, "=");
+62.       size_t idx = 0;
+63.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:62:5: 
+60.   {
+61.       size_t obj = strcspn(path + 6, "=");
+62. >     size_t idx = 0;
+63.   
+64.       char *alias_name = calloc(obj + 1, sizeof(char));
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:64:5: 
+62.       size_t idx = 0;
+63.   
+64. >     char *alias_name = calloc(obj + 1, sizeof(char));
+65.       if (alias_name == NULL)
+66.           return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:65:9: Taking false branch
+63.   
+64.       char *alias_name = calloc(obj + 1, sizeof(char));
+65.       if (alias_name == NULL)
+              ^
+66.           return;
+67.       for (idx = 0; idx < obj; idx++) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:67:10: 
+65.       if (alias_name == NULL)
+66.           return;
+67. >     for (idx = 0; idx < obj; idx++) {
+68.           alias_name[idx] = (path + 6)[idx];
+69.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:67:19: Loop condition is true. Entering loop body
+65.       if (alias_name == NULL)
+66.           return;
+67.       for (idx = 0; idx < obj; idx++) {
+                        ^
+68.           alias_name[idx] = (path + 6)[idx];
+69.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:68:9: 
+66.           return;
+67.       for (idx = 0; idx < obj; idx++) {
+68. >         alias_name[idx] = (path + 6)[idx];
+69.       }
+70.       alias_name[idx] = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:67:30: 
+65.       if (alias_name == NULL)
+66.           return;
+67. >     for (idx = 0; idx < obj; idx++) {
+68.           alias_name[idx] = (path + 6)[idx];
+69.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:67:19: Loop condition is true. Entering loop body
+65.       if (alias_name == NULL)
+66.           return;
+67.       for (idx = 0; idx < obj; idx++) {
+                        ^
+68.           alias_name[idx] = (path + 6)[idx];
+69.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:68:9: 
+66.           return;
+67.       for (idx = 0; idx < obj; idx++) {
+68. >         alias_name[idx] = (path + 6)[idx];
+69.       }
+70.       alias_name[idx] = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:67:30: 
+65.       if (alias_name == NULL)
+66.           return;
+67. >     for (idx = 0; idx < obj; idx++) {
+68.           alias_name[idx] = (path + 6)[idx];
+69.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:67:19: Loop condition is false. Leaving loop
+65.       if (alias_name == NULL)
+66.           return;
+67.       for (idx = 0; idx < obj; idx++) {
+                        ^
+68.           alias_name[idx] = (path + 6)[idx];
+69.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:70:5: 
+68.           alias_name[idx] = (path + 6)[idx];
+69.       }
+70. >     alias_name[idx] = 0;
+71.       idx = obj + 7;
+72.       obj = strcspn(path + idx + 1, "'");
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:71:5: 
+69.       }
+70.       alias_name[idx] = 0;
+71. >     idx = obj + 7;
+72.       obj = strcspn(path + idx + 1, "'");
+73.       char *alias_command = calloc(obj + 1, sizeof(char));
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:72:5: 
+70.       alias_name[idx] = 0;
+71.       idx = obj + 7;
+72. >     obj = strcspn(path + idx + 1, "'");
+73.       char *alias_command = calloc(obj + 1, sizeof(char));
+74.       if (alias_command == NULL)
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:73:5: 
+71.       idx = obj + 7;
+72.       obj = strcspn(path + idx + 1, "'");
+73. >     char *alias_command = calloc(obj + 1, sizeof(char));
+74.       if (alias_command == NULL)
+75.           return;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:74:9: Taking true branch
+72.       obj = strcspn(path + idx + 1, "'");
+73.       char *alias_command = calloc(obj + 1, sizeof(char));
+74.       if (alias_command == NULL)
+              ^
+75.           return;
+76.       obj = idx;
+
+/home/runner/work/42sh-infer/42sh-infer/src/alias/parse.c:75:9: 
+73.       char *alias_command = calloc(obj + 1, sizeof(char));
+74.       if (alias_command == NULL)
+75. >         return;
+76.       obj = idx;
+77.       for (idx = 0; (path + obj + 1)[idx] != '\''; idx++) {

@@ -1,0 +1,49 @@
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:109: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 109, column 31 is not reachable after line 109, column 13.
+Showing all 6 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:103:1: start of procedure treat_arg()
+101.   }
+102.   
+103. > static int treat_arg(Shell *shell, int ac, char **av)
+104.   {
+105.       if (lstr_equals(av[1], "-c")) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:105:9: Taking true branch
+103.   static int treat_arg(Shell *shell, int ac, char **av)
+104.   {
+105.       if (lstr_equals(av[1], "-c")) {
+               ^
+106.           if (ac >= 3) {
+107.               signal(SIGINT, SIG_IGN);
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:106:13: Taking true branch
+104.   {
+105.       if (lstr_equals(av[1], "-c")) {
+106.           if (ac >= 3) {
+                   ^
+107.               signal(SIGINT, SIG_IGN);
+108.               signal(SIGTTOU, SIG_IGN);
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:107:13: 
+105.       if (lstr_equals(av[1], "-c")) {
+106.           if (ac >= 3) {
+107. >             signal(SIGINT, SIG_IGN);
+108.               signal(SIGTTOU, SIG_IGN);
+109.               quick_exec(shell, strdup(av[2]));
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:108:13: 
+106.           if (ac >= 3) {
+107.               signal(SIGINT, SIG_IGN);
+108. >             signal(SIGTTOU, SIG_IGN);
+109.               quick_exec(shell, strdup(av[2]));
+110.           }
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:109:13: Skipping quick_exec(): empty list of specs
+107.               signal(SIGINT, SIG_IGN);
+108.               signal(SIGTTOU, SIG_IGN);
+109.               quick_exec(shell, strdup(av[2]));
+                   ^
+110.           }
+111.           return shell->exit_code;

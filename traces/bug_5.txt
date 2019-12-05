@@ -1,0 +1,86 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:27: error: MEMORY_LEAK
+  memory dynamically allocated by call to `ljson_item_new()` at line 27, column 46 is not reachable after line 27, column 9.
+Showing all 11 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:10:1: start of procedure ljson_parse_array()
+8.   #include "../intern_json.h"
+9.   
+10. > int ljson_parse_array(char *raw, int idx, void **data)
+11.   {
+12.       json_type_t type;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:14:25: 
+12.       json_type_t type;
+13.       void *tmp;
+14. >     bool hasNext = (raw[idx + 1] && raw[idx + 1] != ']');
+15.   
+16.       *((vec_t **)data) = lvec_new();
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:14:21: Condition is true
+12.       json_type_t type;
+13.       void *tmp;
+14.       bool hasNext = (raw[idx + 1] && raw[idx + 1] != ']');
+                          ^
+15.   
+16.       *((vec_t **)data) = lvec_new();
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:14:37: Condition is true
+12.       json_type_t type;
+13.       void *tmp;
+14.       bool hasNext = (raw[idx + 1] && raw[idx + 1] != ']');
+                                          ^
+15.   
+16.       *((vec_t **)data) = lvec_new();
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:14:21: 
+12.       json_type_t type;
+13.       void *tmp;
+14. >     bool hasNext = (raw[idx + 1] && raw[idx + 1] != ']');
+15.   
+16.       *((vec_t **)data) = lvec_new();
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:14:5: 
+12.       json_type_t type;
+13.       void *tmp;
+14. >     bool hasNext = (raw[idx + 1] && raw[idx + 1] != ']');
+15.   
+16.       *((vec_t **)data) = lvec_new();
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:16:5: 
+14.       bool hasNext = (raw[idx + 1] && raw[idx + 1] != ']');
+15.   
+16. >     *((vec_t **)data) = lvec_new();
+17.       idx += 1;
+18.       while (hasNext) {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:17:5: 
+15.   
+16.       *((vec_t **)data) = lvec_new();
+17. >     idx += 1;
+18.       while (hasNext) {
+19.           if (raw[idx] != ',') {
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:18:12: Loop condition is true. Entering loop body
+16.       *((vec_t **)data) = lvec_new();
+17.       idx += 1;
+18.       while (hasNext) {
+                 ^
+19.           if (raw[idx] != ',') {
+20.               type = ljson_find_type(raw, idx);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:19:13: Taking false branch
+17.       idx += 1;
+18.       while (hasNext) {
+19.           if (raw[idx] != ',') {
+                  ^
+20.               type = ljson_find_type(raw, idx);
+21.               if (type == JSON_UNKNOWN)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/parse/list.c:27:9: Skipping lvec_push_back(): empty list of specs
+25.                   return (-1);
+26.           }
+27.           lvec_push_back(*((vec_t **)data), 1, ljson_item_new(type, tmp));
+              ^
+28.           hasNext = (raw[idx] == ',');
+29.           idx += !!hasNext;

@@ -1,0 +1,11 @@
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:163: error: UNINITIALIZED_VALUE
+  The value read from fds[_] was never initialized.
+Showing all 1 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/exec/pipe.c:163:32: 
+161.   
+162.                   if (head->link == '|') {
+163. >                     fd_carry = SOME(Int, fds[0]);
+164.                       close(fds[1]);
+165.                   }

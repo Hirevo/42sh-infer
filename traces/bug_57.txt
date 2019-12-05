@@ -1,0 +1,26 @@
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:52: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lhmap_with_capacity()` at line 51, column 19 is not reachable after line 52, column 5.
+Showing all 3 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:49:1: start of procedure init_vars()
+47.   }
+48.   
+49. > void init_vars(Shell *shell)
+50.   {
+51.       shell->vars = lhmap_with_capacity(5);
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:51:5: 
+49.   void init_vars(Shell *shell)
+50.   {
+51. >     shell->vars = lhmap_with_capacity(5);
+52.       lhmap_set(shell->vars, "pid", fmtstr("%d", getpid()));
+53.       lhmap_set(shell->vars, "ppid", fmtstr("%d", getppid()));
+
+/home/runner/work/42sh-infer/42sh-infer/src/init.c:52:5: Skipping lhmap_set(): empty list of specs
+50.   {
+51.       shell->vars = lhmap_with_capacity(5);
+52.       lhmap_set(shell->vars, "pid", fmtstr("%d", getpid()));
+          ^
+53.       lhmap_set(shell->vars, "ppid", fmtstr("%d", getppid()));
+54.       lhmap_set(shell->vars, "gid", fmtstr("%d", getgid()));

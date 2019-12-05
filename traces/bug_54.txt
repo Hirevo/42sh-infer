@@ -1,0 +1,64 @@
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:65: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 63, column 16 is not reachable after line 65, column 27.
+Showing all 8 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:46:1: start of procedure execute()
+44.   }
+45.   
+46. > void execute(Shell *shell)
+47.   {
+48.       char *line = 0;
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:48:5: 
+46.   void execute(Shell *shell)
+47.   {
+48. >     char *line = 0;
+49.   
+50.       if (shell->ioctl) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:50:9: Taking false branch
+48.       char *line = 0;
+49.   
+50.       if (shell->ioctl) {
+              ^
+51.           OPTION(CharPtr) opt = prompt_line(shell);
+52.           if (IS_NONE(opt)) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:58:9: 
+56.           }
+57.       } else {
+58. >         line = get_next_line(0);
+59.       }
+60.       if (line && shell->tty && shell->ioctl)
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:60:9: Taking false branch
+58.           line = get_next_line(0);
+59.       }
+60.       if (line && shell->tty && shell->ioctl)
+              ^
+61.           writechar('\n');
+62.       if (!line) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:62:10: Taking true branch
+60.       if (line && shell->tty && shell->ioctl)
+61.           writechar('\n');
+62.       if (!line) {
+               ^
+63.           line = strdup("exit");
+64.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:63:9: 
+61.           writechar('\n');
+62.       if (!line) {
+63. >         line = strdup("exit");
+64.       }
+65.       OPTION(CharPtr) opt = clear_comment(line);
+
+/home/runner/work/42sh-infer/42sh-infer/src/my_sh.c:65:5: Skipping clear_comment(): empty list of specs
+63.           line = strdup("exit");
+64.       }
+65.       OPTION(CharPtr) opt = clear_comment(line);
+          ^
+66.       if (IS_NONE(opt)) {
+67.           return;

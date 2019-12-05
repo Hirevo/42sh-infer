@@ -1,0 +1,64 @@
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:44: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 28, column 20 is not reachable after line 44, column 9.
+Showing all 8 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:26:1: start of procedure buffer_seq()
+24.   }
+25.   
+26. > RESULT(PromptAction) buffer_seq(Shell *shell, char init)
+27.   {
+28.       char *buffer = strdup("");
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:28:5: 
+26.   RESULT(PromptAction) buffer_seq(Shell *shell, char init)
+27.   {
+28. >     char *buffer = strdup("");
+29.       if (buffer == 0)
+30.           return ERR(PromptAction, 0);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:29:9: Taking false branch
+27.   {
+28.       char *buffer = strdup("");
+29.       if (buffer == 0)
+              ^
+30.           return ERR(PromptAction, 0);
+31.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:32:5: 
+30.           return ERR(PromptAction, 0);
+31.   
+32. >     vec_t *sequences = lvec_clone(lhmap_keys(shell->w.actions));
+33.       if (sequences == 0) {
+34.           free(buffer);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:33:9: Taking false branch
+31.   
+32.       vec_t *sequences = lvec_clone(lhmap_keys(shell->w.actions));
+33.       if (sequences == 0) {
+              ^
+34.           free(buffer);
+35.           return ERR(PromptAction, 0);
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:38:5: 
+36.       }
+37.   
+38. >     char ch = init;
+39.       do {
+40.           if (ch == -1) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:40:13: Taking false branch
+38.       char ch = init;
+39.       do {
+40.           if (ch == -1) {
+                  ^
+41.               wait_input();
+42.               ch = get_input();
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt/mechanics/cursor.c:44:9: Skipping insert_char_cur(): empty list of specs
+42.               ch = get_input();
+43.           }
+44.           insert_char_cur(&buffer, ch, strlen(buffer));
+              ^
+45.           char *found = lvec_find(sequences, match_sequence, buffer);
+46.           if (found) {

@@ -1,0 +1,39 @@
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:86: error: RESOURCE_LEAK
+  resource acquired to `serv` by call to `init_connection()` at line 77, column 17 is not released after line 86, column 1.
+Showing all 5 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:70:1: start of procedure config_http()
+68.   }
+69.   
+70. > int config_http(Shell *shell, t_config *config)
+71.   {
+72.       int port;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:76:5: Skipping srand(): method has no implementation
+74.       char *ip;
+75.   
+76.       srand(getpid() * time(NULL));
+          ^
+77.       if ((port = init_connection(&serv)) == -1)
+78.           return 1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:77:9: Taking true branch
+75.   
+76.       srand(getpid() * time(NULL));
+77.       if ((port = init_connection(&serv)) == -1)
+              ^
+78.           return 1;
+79.       putstr("server started on http://localhost:%d/\n", port);
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:78:9: 
+76.       srand(getpid() * time(NULL));
+77.       if ((port = init_connection(&serv)) == -1)
+78. >         return 1;
+79.       putstr("server started on http://localhost:%d/\n", port);
+80.       ip = lstr_concat(strdup("open 'http://localhost:"), 2, LSTR_INT,
+
+/home/runner/work/42sh-infer/42sh-infer/src/config-deprecated/config.c:86:1: return from a call to config_http
+84.       close(serv);
+85.       return 0;
+86. > }

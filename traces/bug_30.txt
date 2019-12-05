@@ -1,0 +1,34 @@
+/home/runner/work/42sh-infer/42sh-infer/src/prompt.c:23: error: MEMORY_LEAK
+  memory dynamically allocated by call to `strdup()` at line 23, column 12 is not reachable after line 23, column 12.
+Showing all 4 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt.c:17:1: start of procedure get_hostname()
+15.   #include <unistd.h>
+16.   
+17. > OPTION(CharPtr) get_hostname(void)
+18.   {
+19.       char ret[512] = {0};
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt.c:19:5: 
+17.   OPTION(CharPtr) get_hostname(void)
+18.   {
+19. >     char ret[512] = {0};
+20.   
+21.       if (gethostname(ret, 512) == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt.c:21:9: Taking false branch
+19.       char ret[512] = {0};
+20.   
+21.       if (gethostname(ret, 512) == -1)
+              ^
+22.           return NONE(CharPtr);
+23.       return OPT_FROM_NULLABLE(CharPtr, strdup(ret));
+
+/home/runner/work/42sh-infer/42sh-infer/src/prompt.c:23:5: Skipping __from_nullable_OptionCharPtr(): method has no implementation
+21.       if (gethostname(ret, 512) == -1)
+22.           return NONE(CharPtr);
+23.       return OPT_FROM_NULLABLE(CharPtr, strdup(ret));
+          ^
+24.   }
+25.   

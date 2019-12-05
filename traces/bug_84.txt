@@ -1,0 +1,100 @@
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:89: error: NULL_DEREFERENCE
+  pointer `arg` last assigned on line 88 could be null and is dereferenced at line 89, column 28.
+Showing all 13 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:79:1: start of procedure echo_b()
+77.   }
+78.   
+79. > int echo_b(Shell *shell, vec_t *args)
+80.   {
+81.       (void)(shell);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:81:5: 
+79.   int echo_b(Shell *shell, vec_t *args)
+80.   {
+81. >     (void)(shell);
+82.       bool flag_n = (lvec_size(args) > 1 && lstr_equals(lvec_at(args, 1), "-n"));
+83.       size_t first = flag_n + 1;
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:82:20: Condition is true
+80.   {
+81.       (void)(shell);
+82.       bool flag_n = (lvec_size(args) > 1 && lstr_equals(lvec_at(args, 1), "-n"));
+                         ^
+83.       size_t first = flag_n + 1;
+84.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:82:43: Condition is false
+80.   {
+81.       (void)(shell);
+82.       bool flag_n = (lvec_size(args) > 1 && lstr_equals(lvec_at(args, 1), "-n"));
+                                                ^
+83.       size_t first = flag_n + 1;
+84.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:82:20: 
+80.   {
+81.       (void)(shell);
+82. >     bool flag_n = (lvec_size(args) > 1 && lstr_equals(lvec_at(args, 1), "-n"));
+83.       size_t first = flag_n + 1;
+84.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:82:5: 
+80.   {
+81.       (void)(shell);
+82. >     bool flag_n = (lvec_size(args) > 1 && lstr_equals(lvec_at(args, 1), "-n"));
+83.       size_t first = flag_n + 1;
+84.   
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:83:5: 
+81.       (void)(shell);
+82.       bool flag_n = (lvec_size(args) > 1 && lstr_equals(lvec_at(args, 1), "-n"));
+83. >     size_t first = flag_n + 1;
+84.   
+85.       for (size_t i = first; i < lvec_size(args); i++) {
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:85:10: 
+83.       size_t first = flag_n + 1;
+84.   
+85. >     for (size_t i = first; i < lvec_size(args); i++) {
+86.           if (i != first)
+87.               writechar(' ');
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:85:28: Loop condition is true. Entering loop body
+83.       size_t first = flag_n + 1;
+84.   
+85.       for (size_t i = first; i < lvec_size(args); i++) {
+                                 ^
+86.           if (i != first)
+87.               writechar(' ');
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:86:13: Taking false branch
+84.   
+85.       for (size_t i = first; i < lvec_size(args); i++) {
+86.           if (i != first)
+                  ^
+87.               writechar(' ');
+88.           char *arg = lvec_at(args, i);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:88:9: 
+86.           if (i != first)
+87.               writechar(' ');
+88. >         char *arg = lvec_at(args, i);
+89.           for (size_t j = 0; arg[j]; j++)
+90.               print_char(arg, &j);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:89:14: 
+87.               writechar(' ');
+88.           char *arg = lvec_at(args, i);
+89. >         for (size_t j = 0; arg[j]; j++)
+90.               print_char(arg, &j);
+91.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/echo.c:89:28: Loop condition is false. Leaving loop
+87.               writechar(' ');
+88.           char *arg = lvec_at(args, i);
+89.           for (size_t j = 0; arg[j]; j++)
+                                 ^
+90.               print_char(arg, &j);
+91.       }

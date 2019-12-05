@@ -1,0 +1,35 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:100: error: MEMORY_LEAK
+  memory dynamically allocated by call to `my_int_to_char()` at line 97, column 16 is not reachable after line 100, column 9.
+Showing all 4 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:93:1: start of procedure display_number()
+91.   }
+92.   
+93. > void display_number(flags_t *flags, va_list ap, char *base, int *count)
+94.   {
+95.       char *str;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:97:9: Taking false branch
+95.       char *str;
+96.   
+97.       if ((str = my_int_to_char(va_arg(ap, int))) == NULL)
+               ^
+98.           return;
+99.       if (my_strlen(base) != 10)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:99:9: Taking true branch
+97.       if ((str = my_int_to_char(va_arg(ap, int))) == NULL)
+98.           return;
+99.       if (my_strlen(base) != 10)
+               ^
+100.           str = convert_base(str, "0123456789", base);
+101.       flags->precision = -1;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/my/src/my_putstr.c:100:9: Skipping convert_base(): empty list of specs
+98.           return;
+99.       if (my_strlen(base) != 10)
+100.           str = convert_base(str, "0123456789", base);
+               ^
+101.       flags->precision = -1;
+102.       my_putstr_printf(str, count, flags, 1);

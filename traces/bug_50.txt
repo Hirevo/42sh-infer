@@ -1,0 +1,33 @@
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:52: error: RESOURCE_LEAK
+  resource acquired to `client.sock` by call to `init_connect_dc()` at line 44, column 9 is not released after line 52, column 1.
+Showing all 4 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:40:1: start of procedure launch_dc_client()
+38.   }
+39.   
+40. > static int launch_dc_client(char *addr)
+41.   {
+42.       t_client client;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:44:9: Taking true branch
+42.       t_client client;
+43.   
+44.       if (init_connect_dc(addr, &client))
+              ^
+45.           return 1;
+46.       if (strlen(client.name) == 0)
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:45:9: 
+43.   
+44.       if (init_connect_dc(addr, &client))
+45. >         return 1;
+46.       if (strlen(client.name) == 0)
+47.           client.name = NULL;
+
+/home/runner/work/42sh-infer/42sh-infer/src/dualcast.c:52:1: return from a call to launch_dc_client
+50.       free(client.name);
+51.       return 0;
+52. > }
+53.   
+54.   int launch_dualcast(Shell *shell, vec_t *args)

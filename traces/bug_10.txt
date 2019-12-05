@@ -1,0 +1,41 @@
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c:17: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 16, column 15 is not reachable after line 17, column 9.
+Showing all 5 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c:10:1: start of procedure render_key()
+8.   #include "shell.h"
+9.   
+10. > static void *render_key(void *ctx, void *acc, void *elem, size_t idx)
+11.   {
+12.       (void)(ctx);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c:12:5: 
+10.   static void *render_key(void *ctx, void *acc, void *elem, size_t idx)
+11.   {
+12. >     (void)(ctx);
+13.       if (idx == 0) {
+14.           return strdup(elem);
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c:13:9: Taking false branch
+11.   {
+12.       (void)(ctx);
+13.       if (idx == 0) {
+              ^
+14.           return strdup(elem);
+15.       } else {
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c:16:9: 
+14.           return strdup(elem);
+15.       } else {
+16. >         acc = lstr_append(acc, "\\\\n");
+17.           return lstr_append(acc, sanitize_double_quotes(elem, false));
+18.       }
+
+/home/runner/work/42sh-infer/42sh-infer/src/builtins/builtins.c:17:9: Skipping sanitize_double_quotes(): empty list of specs
+15.       } else {
+16.           acc = lstr_append(acc, "\\\\n");
+17.           return lstr_append(acc, sanitize_double_quotes(elem, false));
+              ^
+18.       }
+19.   }

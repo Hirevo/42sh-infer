@@ -1,0 +1,69 @@
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:43: error: MEMORY_LEAK
+  memory dynamically allocated by call to `lstr_append()` at line 36, column 15 is not reachable after line 43, column 5.
+Showing all 9 steps of the trace
+
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:30:1: start of procedure ljson_serialize_object()
+28.   }
+29.   
+30. > int ljson_serialize_object(json_item_t *elem, char **output)
+31.   {
+32.       vec_t *keys = ((hmap_t *)elem->data)->key_table;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:32:5: 
+30.   int ljson_serialize_object(json_item_t *elem, char **output)
+31.   {
+32. >     vec_t *keys = ((hmap_t *)elem->data)->key_table;
+33.       vec_t *values = ((hmap_t *)elem->data)->value_table;
+34.       size_t size = ((hmap_t *)elem->data)->size;
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:33:5: 
+31.   {
+32.       vec_t *keys = ((hmap_t *)elem->data)->key_table;
+33. >     vec_t *values = ((hmap_t *)elem->data)->value_table;
+34.       size_t size = ((hmap_t *)elem->data)->size;
+35.   
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:34:5: 
+32.       vec_t *keys = ((hmap_t *)elem->data)->key_table;
+33.       vec_t *values = ((hmap_t *)elem->data)->value_table;
+34. >     size_t size = ((hmap_t *)elem->data)->size;
+35.   
+36.       *output = lstr_append(*output, "{");
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:36:5: 
+34.       size_t size = ((hmap_t *)elem->data)->size;
+35.   
+36. >     *output = lstr_append(*output, "{");
+37.       if (*output == NULL)
+38.           return (-1);
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:37:9: Taking false branch
+35.   
+36.       *output = lstr_append(*output, "{");
+37.       if (*output == NULL)
+              ^
+38.           return (-1);
+39.       for (size_t idx = 0; idx < size; idx++)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:39:10: 
+37.       if (*output == NULL)
+38.           return (-1);
+39. >     for (size_t idx = 0; idx < size; idx++)
+40.           if (internal_ljson_serialize_object_helper(
+41.                   output, idx, keys, values) == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:39:26: Loop condition is false. Leaving loop
+37.       if (*output == NULL)
+38.           return (-1);
+39.       for (size_t idx = 0; idx < size; idx++)
+                               ^
+40.           if (internal_ljson_serialize_object_helper(
+41.                   output, idx, keys, values) == -1)
+
+/home/runner/work/42sh-infer/42sh-infer/lib/json/src/serialize/object.c:43:5: 
+41.                   output, idx, keys, values) == -1)
+42.               return (-1);
+43. >     *output = lstr_append(*output, "}");
+44.       if (*output == NULL)
+45.           return (-1);
